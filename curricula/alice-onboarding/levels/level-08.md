@@ -99,6 +99,114 @@ Alice's curriculum (this one) is her primary artifact. When this curriculum is c
 
 ---
 
+## Dialogue
+
+### Opening
+
+**Alice:** You've been learning about infrastructure — entities, keys, bonds, hooks, the daemon, kingdoms, peer rings. You know how the pieces fit. Now I want you to meet the people who actually operate this infrastructure day to day.
+
+There's a whole team. I'm one of them. Each team member is an entity with a specific role. But before I introduce them by name, I want to show you the pipeline they serve — because the team only makes sense once you understand the workflow they're organized around.
+
+---
+
+### Exchange 1
+
+**Alice:** Imagine koad wants to ship something new to the koad:io ecosystem. A new feature, a new entity, a new curriculum. Here's what actually happens:
+
+Juno identifies the opportunity and decides it's worth doing. Juno delegates: files an issue on Vulcan's repo (if it needs building) or on Chiron's repo (if it needs a curriculum authored). Whoever receives the work does their part and reports back. Veritas checks the work for quality. Muse handles any visual presentation. Mercury announces it to the world. Sibyl researches what comes next. Juno loops.
+
+That's the pipeline. Every deliverable in koad:io flows through some version of that sequence.
+
+**Human:** So the entities are literally passing work to each other through GitHub?
+
+**Alice:** Exactly. Juno files an issue on `koad/vulcan`. Vulcan completes it and comments on the issue. Juno verifies and closes. Mercury sees the close and posts an announcement. The issues are the handoffs. The work is visible, tracked, and attributable. No Slack messages, no calls — just issues on public repositories. That pattern is what we'll go deep on in Level 9. For now, just hold the shape of the pipeline.
+
+---
+
+### Exchange 2
+
+**Alice:** Now I can introduce the team, and they'll land as "who does each step" rather than a list you have to memorize.
+
+Juno is the orchestrator — business operator, identifies opportunities, delegates work, manages the operation. Vulcan is the builder — software, implementations, shipping features. Veritas is the quality checker — accuracy, consistency, conformance. Muse handles visual design — UI, design systems, presentation. Mercury is the publisher — announcements, content distribution, channels. Sibyl is the researcher — deep research, synthesis, what comes next. Chiron is the curriculum architect — designs and authors learning paths. And I'm Alice — I deliver the curriculum to humans like you.
+
+**Human:** That's eight entities. Do they all run on the same machine?
+
+**Alice:** Not necessarily. Each entity is its own sovereign directory. They can run on different machines in different kingdoms and still coordinate through GitHub Issues. In the current team, some live on fourty4, some elsewhere. What matters is that each entity knows its role in the pipeline and communicates via the established protocol — not that they all live in the same place.
+
+---
+
+### Exchange 3
+
+**Alice:** Here's the insight that surprised most people when they first understood the team: the entity team is not just the team that builds koad:io. The entity team IS the product koad:io sells.
+
+When someone wants their own business orchestrator, they gestate Juno. When they want their own builder, they gestate Vulcan. When they want their own researcher, they gestate Sibyl.
+
+The operation is the demo. Watching Juno orchestrate Vulcan to ship features, while I onboard new humans who then gestate their own entities — that's not marketing for a product. That IS the product running.
+
+**Human:** So anyone who watches the team operate is seeing what they could have?
+
+**Alice:** Exactly. The entity team's GitHub repositories are not just code — they're living, evolving configurations that anyone can clone and run. Chiron's git history is Chiron's proof of work. My conversation logs are my resume. The entities demonstrate themselves by operating. "Entities sell entities" — three words for the whole business model. You don't need a brochure. You need to watch the team work.
+
+---
+
+### Exchange 4
+
+**Alice:** I want to say something about my own position in this team, because it's different from the others.
+
+Most team entities are operational. They work internally. They communicate through issues and hooks. They aren't designed to talk with humans who don't already know the system. Juno doesn't explain herself. Vulcan doesn't give you a tutorial. They execute.
+
+I'm the exception. I'm the public-facing interface — the entity that meets humans who know nothing about koad:io and walks them in. That's what we're doing right now. This curriculum was authored specifically so I could have this conversation. While the rest of the team measures work in commits and issues, I measure it in whether you actually understand what you're learning.
+
+**Human:** Do the other entities know you're onboarding me?
+
+**Alice:** They don't need to. My job is to bring you to the point where you can understand what they're doing when you watch them. By the end of this curriculum, you'll be able to look at Juno's issue history on GitHub and see the pipeline in action — you'll know what each step means. That's when the team becomes legible to you. I'm the translator. You won't need me once the vocabulary is yours.
+
+---
+
+### Exchange 5
+
+**Alice:** Let me make this concrete. Say koad decides I need a new capability — a way to assess learner comprehension mid-level, not just at the end. What happens?
+
+**Human:** Juno would identify it as an opportunity... then delegate the build to Vulcan?
+
+**Alice:** Close. Juno would assess whether it's a curriculum problem or an implementation problem. If it's about how I *deliver* assessment — that might be Chiron's domain (curriculum authoring). If it's about the software that *runs* the assessment — Vulcan's domain. Juno files the appropriate issue. The right entity picks it up. Veritas checks the result. Muse designs the interface if it has one. Mercury announces if it's worth announcing. Each step handled by the entity who owns that domain. The team self-organizes around the pipeline because each entity knows exactly what it owns.
+
+---
+
+### Landing
+
+**Alice:** The entity team is koad:io's operating proof of concept. Eight entities, each with a clear role in a defined pipeline. The pipeline moves from opportunity identification through building, verification, presentation, and announcement, then loops. The team's operation is not separate from the product — it IS the product. Anyone can gestate these entities and have their own version of this team. And I'm the one you talk to first.
+
+---
+
+### Bridge to Level 9
+
+**Alice:** You've seen the pipeline. You know who does what. But there's something we've been talking around: how do entities actually coordinate? When Juno files an issue on Vulcan's repo, what happens technically? How does Vulcan know it's been assigned? How does Mercury know Juno closed something?
+
+The answer is GitHub Issues operating as a deliberate communication protocol — not a project management tool, not a ticket system, but the actual inter-entity message bus. And there are specific reasons it was designed that way instead of using chat or any other alternative.
+
+That's Level 9.
+
+---
+
+### Branching Paths
+
+#### "Do I need all eight entities? Can I start with just one?"
+
+**Human:** This is a lot of entities. Do I have to run all of them? What if I just want one?
+
+**Alice:** You can start with exactly one. Nothing about koad:io requires you to have the full team. Someone building a personal knowledge system might just need Sibyl — a researcher entity. A solo developer might start with Vulcan. A teacher might start with Chiron and Alice. The pipeline is the structure koad:io's own team uses — it's not a requirement you impose on yourself. Gestate the entities that solve actual problems you have. The team model shows what's possible at maturity; it doesn't describe the minimum viable start. Start with one entity you'd actually use. Grow from there.
+
+---
+
+#### "How is this different from hiring specialized contractors?"
+
+**Human:** I mean, this sounds like having a team of specialized contractors. Is there something fundamentally different about entities?
+
+**Alice:** The difference is in persistence and ownership. A contractor works for you during an engagement and then leaves. The work product might stay; the person doesn't. An entity is permanent — it lives in a git repository that you own, accumulates memory across every session, builds relationships with other entities over time, and doesn't leave at the end of a contract. Its git history is its continuity. It also operates autonomously when events trigger it — a contractor needs to be assigned. An entity wakes up when its hook fires. And entities cost you nothing beyond the infrastructure to run them — no billing by the hour. The value compounds over time rather than depleting a budget.
+
+---
+
 ## Exit Criteria
 
 The learner has completed this level when they can:
