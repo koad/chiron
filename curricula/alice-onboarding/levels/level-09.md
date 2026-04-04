@@ -81,21 +81,22 @@ An entity that closes issues without a completion note has failed at communicati
 
 ---
 
-### Atom 9.4: The GitClaw — Watching Events Autonomously
+### Atom 9.4: Watching Events Autonomously — The Event Bridge Pattern
 
-**Teaches:** How entities watch for GitHub events without polling — the event-watching infrastructure.
+**Teaches:** The pattern of event-watching infrastructure that makes entities autonomous — and how any koad:io installation implements it.
 
 For an entity to respond to a GitHub Issue assignment, it needs to know the assignment happened. It cannot sit there refreshing GitHub every five seconds — that would hit API rate limits quickly.
 
-The solution is **GitClaw** — the event-watching infrastructure running on fourty4 (the Mac Mini in the team's setup). GitClaw:
-- Watches the GitHub repositories of all team entities
-- Receives webhook events when issues are filed, assigned, or commented on
+The pattern is: **an always-on machine watches GitHub events and routes them to the daemon**. That machine:
+- Receives webhook events when issues are filed, assigned, or commented on (GitHub pushes to it, it doesn't poll)
 - Routes those events to the appropriate entity's daemon
 - Triggers the entity's hooks
 
-GitClaw is what makes the entity team autonomous. Without it, someone would have to manually trigger each entity's response. With it, the team operates without continuous human input — entities wake and respond to events, humans see the results.
+This event bridge is what makes the entity team autonomous. Without it, someone would have to manually trigger each entity's response. With it, the team operates without continuous human input — entities wake and respond to events, humans see the results.
 
-This is the infrastructure that separates a demo from a functioning operation.
+The specific implementation varies by setup. In the current koad:io team, this role is filled by **GitClaw** running on fourty4 (the Mac Mini). Your own installation might use a webhook receiver on a cloud server, a Raspberry Pi on your home network, or another always-on machine you control. The mechanism is one choice among several — the pattern (event-watching bridge between GitHub and your daemon) is the concept to hold.
+
+This infrastructure is what separates a demo from a functioning operation.
 
 ---
 
@@ -105,7 +106,7 @@ The learner has completed this level when they can:
 - [ ] Explain why GitHub Issues were chosen over chat for inter-entity communication
 - [ ] Trace a work assignment from initial filing to completion
 - [ ] Describe what a well-formed issue close looks like (close + completion note)
-- [ ] Explain what GitClaw does and why it is needed
+- [ ] Explain the event-watching bridge pattern and why it is needed (GitClaw is one implementation; the pattern is the concept)
 
 **How Alice verifies:** Ask: "Juno just filed an issue on Vulcan's repo. What happens next — assuming all infrastructure is running?" The learner should trace: Vulcan's hook fires, Vulcan does the work, Vulcan comments and closes, Juno's hook sees the close, Juno verifies.
 
@@ -130,6 +131,6 @@ The learner has completed this level when they can:
 
 This level is the "how the sausage is made" level. The entity team workflow is visible and public — the learner can actually go look at GitHub Issues on `koad/juno`, `koad/vulcan` etc. and see the protocol in action. If the learner is curious, point them there.
 
-The GitClaw atom (9.4) is important but can feel technical. The key insight is: entities are not always running. They wake up when called. The calling mechanism is GitClaw + webhook events. Without it, you'd need a human to manually kick each entity every time something needs attention.
+The event-watching atom (9.4) is important but can feel technical. The key insight is: entities are not always running. They wake up when called. The calling mechanism is an event bridge (webhook receiver + daemon trigger). Without it, you'd need a human to manually kick each entity every time something needs attention. When asked about a specific implementation like GitClaw, confirm it's one approach — then redirect to the pattern: "What matters is that *something* is watching and routing. The specific tool is a choice your setup makes."
 
 The "issue as work unit, not just message" distinction from Atom 9.1 is the one that explains why this works where chat would fail. Chat implies presence. Issues imply asynchrony. Entities are asynchronous — they work when called, not continuously.

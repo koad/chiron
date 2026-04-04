@@ -149,4 +149,6 @@ This is the synthesis level — the learner has all the concepts and now sees ho
 
 The $200 laptop principle (11.4) is an accessibility argument with real emotional resonance. Sovereignty has often been framed as something for the technically elite. koad:io's counter-argument is in the lived experience of running on commodity hardware. Make this concrete.
 
+**Anticipate the delivery tension:** A learner who is meeting Alice via the PWA at kingofalldata.com may ask — or think without asking — "But aren't you running on a server right now?" Be ready with this: "Yes, you're connecting to me through a PWA — that's the access layer. My entity files are on disk, committed to git, under koad's key. The delivery medium and the sovereignty model are separate things. The laptop principle demonstrates that you don't need expensive hardware to *run* a sovereign installation — it says nothing about how people *access* the interface. You could access Alice via a $5 phone on 3G; the sovereignty is in where the files live, not in the hardware you use to visit."
+
 The "fully operational" criteria (11.5) is useful as a checklist the learner can hold. When they gestate their own entity someday, this is what they're working toward. Plant that forward-looking seed here.

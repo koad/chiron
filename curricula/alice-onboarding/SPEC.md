@@ -4,9 +4,9 @@ id: a9f3c2e1-7b4d-4e8a-b5f6-2d1c9e0a3f7b
 slug: alice-onboarding
 title: "koad:io Human Onboarding — 12-Level Sovereignty Path"
 description: "After completing all 12 levels, the learner understands sovereign infrastructure, can navigate an entity directory, articulates why trust bonds matter, and has made a cryptographically signed commitment to operating with sovereignty."
-version: 1.0.0
+version: 1.1.0
 authored_by: chiron
-authored_at: 2026-04-04T00:00:00Z
+authored_at: 2026-04-04T12:00:00Z
 owned_by: kingofalldata.com
 signature: (pending — signed by Chiron on first authoring commit)
 
@@ -92,6 +92,7 @@ Full level content lives in `levels/`. See VESTA-SPEC-025 for the loading contra
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0.0 | 2026-04-04 | Initial authoring by Chiron. 12 levels, 54 atoms total. |
+| 1.1.0 | 2026-04-04 | Revisions in response to Alice's review (APPROVE WITH NOTES). Level 3: added wax-seal signing analogy to delivery notes. Level 6: added kingdom-awareness exit criterion and second assessment question. Level 8: reordered atoms — pipeline first (8.1), then entity roster (8.2). Level 9 Atom 9.4: reframed as pattern-first (event bridge), GitClaw named as one implementation. Level 11: added delivery note for PWA sovereignty tension. |
 
 ---
 

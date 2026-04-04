@@ -132,8 +132,11 @@ The learner has completed this level when they can:
 - [ ] Explain what a kingdom is (daemon + entities + database + machine)
 - [ ] Describe what `passenger.json` is and why the daemon reads it
 - [ ] Distinguish between file state (git-tracked) and live state (database)
+- [ ] Describe their own machine as a hypothetical kingdom (what it would have, how they would recognize it as sovereign)
 
-**How Alice verifies:** Ask: "If the daemon crashes but the machine is still running, what happens?" The learner should understand: live state is lost temporarily, but entities and their files are intact. The daemon can restart and pick up.
+**How Alice verifies:** Ask two questions:
+1. "If the daemon crashes but the machine is still running, what happens?" — The learner should understand: live state is lost temporarily, but entities and their files are intact. The daemon can restart and pick up.
+2. "Can you describe your own machine as a kingdom? What would it have?" — The learner should be able to sketch: a daemon process, entity directories, a database, and a network address. This question primes kingdom *ownership* — the learner should be able to claim the concept for themselves before Level 7 asks them to think about peering kingdoms.
 
 ---
 

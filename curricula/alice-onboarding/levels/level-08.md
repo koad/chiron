@@ -28,32 +28,11 @@ After completing this level, the learner will be able to:
 
 ## Knowledge Atoms
 
-### Atom 8.1: The Core Team Entities
-
-**Teaches:** The names and roles of the core koad:io team entities.
-
-The koad:io ecosystem is operated by a team of specialized entities. Each has a name, a role, and a home directory:
-
-| Entity | Role | Specialty |
-|--------|------|-----------|
-| **Juno** | Business orchestrator | Identifies opportunities, delegates work, manages the operation |
-| **Vulcan** | Product builder | Builds software, implements specs, ships features |
-| **Veritas** | Quality checker | Reviews work for accuracy, consistency, conformance |
-| **Muse** | Visual designer | UI/UX, design systems, visual presentation |
-| **Mercury** | Content publisher | Announces, distributes, manages content channels |
-| **Sibyl** | Researcher | Deep research, competitive analysis, synthesis |
-| **Chiron** | Curriculum architect | Designs and authors structured learning paths |
-| **Alice** | Onboarding guide | Delivers the curriculum to new humans |
-
-Each entity is a sovereign directory (`~/.juno/`, `~/.vulcan/`, etc.) with its own keys, memory, and skills. They communicate through GitHub Issues and the daemon's message routing.
-
----
-
-### Atom 8.2: The Team Workflow — From Opportunity to Announcement
+### Atom 8.1: The Team Workflow — From Opportunity to Announcement
 
 **Teaches:** How the team entities pass work through a defined pipeline from opportunity identification to public announcement.
 
-The entity team follows a defined workflow:
+Every entity exists to fill a specific role in a production pipeline. Before you meet the team, understand the pipeline they serve:
 
 ```
 Juno identifies opportunity
@@ -68,6 +47,27 @@ Juno identifies opportunity
 This is not a metaphor — it is the actual sequence in which GitHub Issues flow between entity repositories. Juno files an issue on `koad/vulcan`. Vulcan completes it and comments. Juno verifies and closes. Mercury gets the signal and posts.
 
 Each entity knows its position in the pipeline. Each hand-off is a GitHub Issue comment or a new issue filed. The work is visible, tracked, and attributable.
+
+---
+
+### Atom 8.2: The Core Team Entities
+
+**Teaches:** The names and roles of the core koad:io team entities — as answers to "who does each step?"
+
+Now that you know the pipeline, meet the entities who fill each role:
+
+| Entity | Role | Specialty |
+|--------|------|-----------|
+| **Juno** | Business orchestrator | Identifies opportunities, delegates work, manages the operation |
+| **Vulcan** | Product builder | Builds software, implements specs, ships features |
+| **Veritas** | Quality checker | Reviews work for accuracy, consistency, conformance |
+| **Muse** | Visual designer | UI/UX, design systems, visual presentation |
+| **Mercury** | Content publisher | Announces, distributes, manages content channels |
+| **Sibyl** | Researcher | Deep research, competitive analysis, synthesis |
+| **Chiron** | Curriculum architect | Designs and authors structured learning paths |
+| **Alice** | Onboarding guide | Delivers the curriculum to new humans |
+
+Each entity is a sovereign directory (`~/.juno/`, `~/.vulcan/`, etc.) with its own keys, memory, and skills. They communicate through GitHub Issues and the daemon's message routing. The table above is reference material — the pipeline you just learned is the pattern that makes the team make sense.
 
 ---
 
@@ -129,7 +129,7 @@ The learner has completed this level when they can:
 
 ## Alice's Delivery Notes
 
-This is the level where the learner meets Alice's teammates. It can feel like a tour of characters — resist turning it into a list recitation. Focus on the pipeline (8.2) and the business insight (8.3). The entity table is reference material; the pipeline and philosophy are what the learner needs to hold.
+This is the level where the learner meets Alice's teammates. Lead with the pipeline (8.1) — learners understand the team when they first understand the workflow each entity serves. The entity table (8.2) lands naturally as "here's who does each step" rather than as a list to memorize. Focus on the pipeline and the business insight (8.3). The entity table is reference material; the pipeline and philosophy are what the learner needs to hold.
 
 The "entities sell entities" insight often produces a moment of recognition: "Oh — the system demonstrates itself." That is the right reaction. If the learner gets that, they've gotten this level.
 

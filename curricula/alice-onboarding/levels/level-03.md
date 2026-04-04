@@ -133,4 +133,6 @@ The key pair concept is often the first technically abstract thing in the curric
 
 Avoid deep cryptographic explanations. The learner does not need to understand Ed25519 mathematics. They need to understand: private key signs, public key verifies, they are linked, you cannot reverse-engineer one from the other.
 
+For the signing function specifically, use the wax seal analogy: "Imagine you have a stamp — a physical seal that is uniquely yours. You publish what your stamp looks like so anyone can recognize it. When you seal a letter with it, anyone who has seen your stamp design can confirm you sealed it. They cannot fake the seal because they don't have the physical stamp. Your private key is the stamp. Your public key is the published design." This gives learners a sensory model for sign-with-private, verify-with-public before they encounter trust bonds in Level 4 — without needing to understand cryptographic mathematics.
+
 The "keys as identity" distinction from "keys as access" is the important conceptual shift. A credential (password, API key) is something you have. Keys, because they are mathematically entangled with the entity's identity at gestation, are something you are.
