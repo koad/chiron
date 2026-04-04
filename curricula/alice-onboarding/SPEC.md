@@ -1,69 +1,112 @@
 ---
 type: curriculum-bubble
-id: (to be assigned — UUID-v4 when authoring begins)
+id: a9f3c2e1-7b4d-4e8a-b5f6-2d1c9e0a3f7b
 slug: alice-onboarding
-title: "koad:io Human Onboarding — 12-Level Path"
-description: "After completing all 12 levels, the learner understands the koad:io ecosystem, can operate a basic entity, understands trust bonds and peer rings, and can contribute to a koad:io kingdom."
-version: 0.0.0-placeholder
+title: "koad:io Human Onboarding — 12-Level Sovereignty Path"
+description: "After completing all 12 levels, the learner understands sovereign infrastructure, can navigate an entity directory, articulates why trust bonds matter, and has made a cryptographically signed commitment to operating with sovereignty."
+version: 1.0.0
 authored_by: chiron
-authored_at: (pending)
-owned_by: (kingdom FQDN — to be set on authoring)
+authored_at: 2026-04-04T00:00:00Z
+owned_by: kingofalldata.com
 signature: (pending — signed by Chiron on first authoring commit)
 
 prerequisites: []
 
-audience: "Humans new to the koad:io ecosystem — no prior entity experience required. Basic CLI familiarity assumed."
-estimated_hours: (to be determined after level authoring)
+audience: "Humans new to the koad:io ecosystem. Basic CLI familiarity assumed (can open a terminal, run a command, understand what a directory is). No prior knowledge of sovereign infrastructure, trust bonds, or entity architecture required."
+estimated_hours: 4
 
 level_count: 12
-atom_count_total: (to be determined)
+atom_count_total: 54
 
 is_shared: true
-shared_with: []
+shared_with: ["*"]
 license: cc-by
 
-commissioned_by: (issue URL — to be set when commission filed on koad/chiron)
+commissioned_by: https://github.com/koad/chiron/issues/1
 ---
 
-# Curriculum: koad:io Human Onboarding
+# Curriculum: koad:io Human Onboarding — 12-Level Sovereignty Path
 
-**STATUS: PLACEHOLDER — not yet authored**
+## Overview
 
-This file is a placeholder for Alice's 12-level koad:io onboarding curriculum. Chiron will author the full curriculum on receipt of a commission issue on `koad/chiron`.
+This curriculum walks a complete newcomer from "What is koad:io?" to operating as a sovereign participant in the ecosystem. It is not a reference document — it is a journey. Each level is a knowledge gate. The learner cannot advance until they can demonstrate what the current level taught them. By Level 12 they have made a real commitment, verified with cryptography, that they understand what they have joined.
 
-## Proposed Level Outline (from VESTA-SPEC-025 Section 6.1)
-
-Chiron must review and validate these titles before authoring begins (VESTA-SPEC-026 OQ-002):
-
-1. What is koad:io
-2. Sovereign Identity
-3. The Entity Model
-4. Entity Gestation
-5. Trust Bonds
-6. Commands and Hooks
-7. The Daemon and Kingdom
-8. Peer Rings
-9. The Team Entities
-10. GitHub Issues Protocol
-11. Context Bubbles
-12. Operating an Entity
+Alice delivers this curriculum conversationally, one level at a time. The learner's progress is tracked by Alice and Vulcan's progression system. The curriculum is designed for delivery over multiple sessions — a learner may complete 2–3 levels in a sitting and return for the rest.
 
 ## Entry Prerequisites
 
-Basic CLI familiarity (ability to run commands, navigate directories). No prior koad:io knowledge required — that is what this curriculum teaches.
+The learner can:
+- Open a terminal (or knows what one is)
+- Navigate to a directory (or can be shown how)
+- Read a markdown file
 
-## Completion Statement (draft)
+The learner does NOT need to:
+- Know what an "entity" is
+- Know what SSH is for
+- Have any existing koad:io installation
+- Know what GPG or sovereign infrastructure means
+
+These are taught by the curriculum itself.
+
+## Completion Statement
 
 After completing all 12 levels, the learner will be able to:
-- Explain what koad:io is and why it was built (sovereign identity, no vendor lock-in)
-- Navigate and read an entity directory (`~/.alice/`, `~/.juno/`)
-- Understand what trust bonds are and how they authorize entity relationships
-- Run basic entity commands and understand what hooks do
-- Explain the daemon-kingdom model and peer rings at a conceptual level
-- Describe the inter-entity team workflow (Juno → Vulcan → Veritas → Muse → Mercury)
-- Know how GitHub Issues function as the inter-entity communication protocol
+- Explain what koad:io is and why it was built, in their own words
+- Describe the difference between a sovereign system and a platform-dependent one
+- Navigate an entity directory (`~/.alice/`, `~/.juno/`) and read what they find
+- Explain what trust bonds are, why they are signed, and what they authorize
+- Describe the two-layer architecture (framework layer + entity layer)
+- Explain what the daemon is and why a kingdom needs one
+- Describe how peer rings work and what sponsorship unlocks
+- Identify the team entities and their roles in the ecosystem
+- Explain how GitHub Issues function as the inter-entity communication protocol
+- Describe what context bubbles are and why knowledge must be portable
+- Run a basic entity command and describe what happened
+- Articulate what they are committing to by joining the koad:io ecosystem
 
 ---
 
-*This SPEC.md will be replaced with the full curriculum bubble when Chiron authors the content.*  
-*Commission via GitHub Issue on `koad/chiron` to trigger authoring.*
+## Level Summary
+
+| # | Title | Atoms | Minutes |
+|---|-------|-------|---------|
+| 1 | First Contact — What Is This? | 4 | 15 |
+| 2 | What Is an Entity? | 5 | 20 |
+| 3 | Your Keys Are You | 4 | 20 |
+| 4 | How Entities Trust Each Other | 5 | 25 |
+| 5 | Commands and Hooks — How Entities Take Action | 4 | 20 |
+| 6 | The Daemon and the Kingdom | 5 | 25 |
+| 7 | Peer Rings — Connecting Kingdoms | 4 | 20 |
+| 8 | The Entity Team | 4 | 20 |
+| 9 | GitHub Issues — How Entities Communicate | 4 | 18 |
+| 10 | Context Bubbles — Portable Knowledge | 4 | 20 |
+| 11 | Running an Entity — From Concept to Operation | 5 | 25 |
+| 12 | The Commitment — What You're Joining | 4 | 25 |
+
+Full level content lives in `levels/`. See VESTA-SPEC-025 for the loading contract and progressive disclosure rules.
+
+---
+
+## Curriculum Changelog
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 1.0.0 | 2026-04-04 | Initial authoring by Chiron. 12 levels, 54 atoms total. |
+
+---
+
+## References
+
+- Commissioned by: https://github.com/koad/chiron/issues/1
+- Research source: VESTA-SPEC-025, VESTA-SPEC-026, Alice CLAUDE.md, Muse design brief, team operations context
+- Delivered by: Alice (kingofalldata.com)
+- Progression system: Vulcan — see koad/vulcan for implementation
+- Format authority: Vesta (VESTA-SPEC-025)
+
+---
+
+**Signature:**
+```
+(Pending — Chiron to sign with ed25519 key on first delivery)
+```
+Signed by: chiron@kingofalldata.com

@@ -12,7 +12,7 @@ Chiron's canonical index of all authored curricula in the koad:io ecosystem.
 
 | Slug | Title | Status | Levels | Version | Commissioned By |
 |------|-------|--------|--------|---------|----------------|
-| `alice-onboarding` | koad:io Human Onboarding | placeholder | 12 | — | Juno |
+| `alice-onboarding` | koad:io Human Onboarding — 12-Level Sovereignty Path | review | 12 | 1.0.0 | Juno (koad/chiron#1) |
 
 ---
 
@@ -32,12 +32,17 @@ Chiron's canonical index of all authored curricula in the koad:io ecosystem.
 ## Prerequisite Graph
 
 ```
-(none yet — alice-onboarding has no prerequisites; it is the entry point)
+alice-onboarding (no prerequisites — this is the ecosystem entry point)
+  → [future: entity-operations] (requires: alice-onboarding complete)
+    → [future: advanced-trust-bonds] (requires: entity-operations Level 4+ complete)
 ```
 
 ---
 
 ## Notes
 
-- No curricula have been authored yet. The `alice-onboarding` entry is a placeholder pending Chiron's first commission session.
-- On first commission: review and validate the 12 level titles in VESTA-SPEC-025 Section 6.1 before authoring begins (see OQ-002 in VESTA-SPEC-026).
+- `alice-onboarding` v1.0.0 authored 2026-04-04. 12 levels, 54 atoms, ~4 hours estimated delivery.
+- Status: `review` — Alice should read the full curriculum and file feedback on `koad/chiron` before first delivery.
+- Delivery: Alice (kingofalldata.com)
+- Progression system: Vulcan — see koad/vulcan for implementation issue
+- Level titles revised from VESTA-SPEC-025 Section 6.1 placeholder titles. Validated per VESTA-SPEC-026 OQ-002.
