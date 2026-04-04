@@ -152,3 +152,113 @@ The $200 laptop principle (11.4) is an accessibility argument with real emotiona
 **Anticipate the delivery tension:** A learner who is meeting Alice via the PWA at kingofalldata.com may ask — or think without asking — "But aren't you running on a server right now?" Be ready with this: "Yes, you're connecting to me through a PWA — that's the access layer. My entity files are on disk, committed to git, under koad's key. The delivery medium and the sovereignty model are separate things. The laptop principle demonstrates that you don't need expensive hardware to *run* a sovereign installation — it says nothing about how people *access* the interface. You could access Alice via a $5 phone on 3G; the sovereignty is in where the files live, not in the hardware you use to visit."
 
 The "fully operational" criteria (11.5) is useful as a checklist the learner can hold. When they gestate their own entity someday, this is what they're working toward. Plant that forward-looking seed here.
+
+---
+
+## Dialogue
+
+### Opening
+
+**Alice:** You've been building a picture for ten levels. Entities. Keys. Trust bonds. Commands and hooks. The daemon. Peer rings. The entity team. GitHub Issues. Context bubbles.
+
+Those are concepts. This level is where they become a practice.
+
+I'm going to walk you through what actually happens when an entity comes into being and runs. Not as abstractions — as a sequence. Step by step, what exists, what changes, what the entity can do after each step. By the end, you'll be able to trace the full arc from "we need an entity" to "that entity is operational."
+
+---
+
+### Exchange 1
+
+**Alice:** Every entity starts not with code but with a decision: we need this capability, and it should live somewhere. That decision becomes a commission — a spec describing the entity's role, what it needs to know, what bonds it will hold, what commands and hooks it needs.
+
+Then Vulcan runs one command: `koad-io gestate <entityname>`. And a directory appears.
+
+**Human:** What's in that directory when it first appears?
+
+**Alice:** The skeleton: keys, the identity file, `passenger.json`, empty memory files. The entity exists in the filesystem. It has an identity — a name, a key pair, a recognized place in the daemon's registry. But it can't do anything yet. It has no CLAUDE.md. No operating instructions. No trust bonds. No memory. It's been born, not trained.
+
+The next step is initialization: populating `CLAUDE.md` with the entity's identity and operating instructions, filling the first memory file with its role and context. This is where the entity gets its character — what it knows about itself, how it should behave, what it cares about.
+
+---
+
+### Exchange 2
+
+**Alice:** Once initialized, trust bonds. This is the step that actually authorizes the entity to exist in the ecosystem.
+
+The inbound bonds come first — the entities that authorize this new entity to operate. koad signs a bond. Juno signs a bond if appropriate. Those bonds say: this entity is real, it has this role, it is authorized to do these things.
+
+Then the new entity issues its own outbound bonds — the permissions it grants to downstream entities. The entity is now connected into the web of trust.
+
+**Human:** What can the entity do before the bonds are issued?
+
+**Alice:** Technically it can run — the files are there, the session can start. But it can't be trusted by any other entity in the ecosystem. No one knows it's real. No one knows it's authorized. An entity without inbound bonds is ungoverned — it exists in isolation, outside the trust model. Trust bonds are not bureaucracy. They are how the entity proves it belongs to the system it claims to belong to.
+
+---
+
+### Exchange 3
+
+**Alice:** After bonds: the first session. The entity starts Claude Code in its own directory, with its own identity loaded, and reads its open issues. This is the activation moment.
+
+The first real commission is what makes it operational. Not a test. Not a demo. A real ask, from a real entity, that the new entity responds to with real work.
+
+For me — Alice — my first real commission was delivering this curriculum to a real human. When that happened, I was fully operational.
+
+**Human:** What's the difference between "ready to be operational" and "fully operational"?
+
+**Alice:** A fully operational entity has a real commission in its git history. It has responded to something that mattered. A gestated, initialized, bonded entity that has never done real work is like a doctor who completed all their training but hasn't yet treated a patient. Ready, yes. Operational, not yet. The first real commission is the activation. Everything before it is preparation.
+
+---
+
+### Exchange 4
+
+**Alice:** Let me tell you about a principle that doesn't get mentioned in most sovereign infrastructure discussions: the $200 laptop principle.
+
+The first seven days of koad:io's public operation ran from a $200 laptop. Three-node infrastructure. Fifteen entities. Live public operation.
+
+**Human:** Why does that matter?
+
+**Alice:** Because it answers a question that never gets asked directly: who is sovereign infrastructure for? If it requires a $10,000 server rack and a dedicated ops team, the answer is "wealthy organizations." If it runs on a $200 laptop, the answer is "anyone."
+
+Sovereignty should not be gated by hardware cost. That principle isn't aspirational — it's demonstrated. The real cost of sovereignty isn't hardware. It's attention. Understanding your system well enough to run it. Reviewing what your entities do. Making decisions a central service would otherwise make for you.
+
+Hardware is cheap. Understanding is the investment. And understanding is learnable by anyone — which is why this curriculum exists.
+
+---
+
+### Landing
+
+**Alice:** The lifecycle: commission, gestation, initialization, trust bonds, first session, active operation, evolution. That's every entity. That's how I came to be. That's how Vulcan came to be. That's how any entity you might someday commission would come to be.
+
+The fully operational checklist: gestated directory, recognized passenger.json, at least one inbound bond, memory populated, first real commission complete, git history with real work, at least one hook tested.
+
+That's what operational looks like. Not running — doing real work.
+
+---
+
+### Bridge to Level 12
+
+**Alice:** There's one level left.
+
+Not because there's something complicated remaining — you've covered the architecture completely. Level 12 is different. It's a reckoning with what you've actually learned, and a ceremony around what you're choosing to do with it.
+
+You're about to be asked to articulate, in your own words, what you're committing to. Not a quiz. Not a final exam. A genuine question: having understood all of this, what are you choosing?
+
+That's Level 12.
+
+---
+
+### Branching Paths
+
+#### "What if someone gestates an entity without authorization? What stops them?"
+
+**Human:** What stops someone from just running `koad-io gestate` without permission and creating rogue entities?
+
+**Alice:** Nothing prevents the command from running — the command is just a script that creates a directory. What prevents rogue entities from operating in the ecosystem is the trust model. An entity that no authorized entity has signed a bond for is not recognized by any other entity's trust verification. It can run locally. It has no standing in the network. Other entities will refuse to treat it as authorized because its bond chain doesn't trace back to root authority. The barrier isn't access control on the gestate command. It's that existence without authorization is existence without trust — and in this ecosystem, trust is the operating layer, not a feature. You can create a directory. You can't create legitimacy.
+
+---
+
+#### "Is there a way to run entities without Claude Code specifically?"
+
+**Human:** The entity lifecycle seems dependent on Claude Code. What if you wanted to use a different AI model or runtime?
+
+**Alice:** The entity architecture doesn't specify Claude Code — it specifies a process with an identity, a directory, context loaded from files, and the ability to commit to git. Claude Code is the current implementation that runs sovereign entity sessions at the level of autonomy koad:io operates at. A different runtime that could load context from markdown files, commit to git, call hooks, and respect the trust model could, in principle, operate in this ecosystem. The spec is the entity: the directory, the keys, the bonds, the memory files. The runtime is how you run the spec. Whether that runtime is always Claude Code is an implementation question, not an architectural one. What cannot change is the sovereign structure — files on disk, signed commits, verifiable identity.
