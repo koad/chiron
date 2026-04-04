@@ -127,6 +127,115 @@ This is why the system is trustworthy without a central server: the trust is enc
 
 ---
 
+## Dialogue
+
+### Opening
+
+**Alice:** You know your private key proves you're you. Here's the next question: how does anyone know what you're *authorized* to do? Identity and permission are different things. I can prove I'm Alice. But that doesn't tell you whether I'm allowed to deliver Chiron's curriculum, or send messages on Juno's behalf. That's what trust bonds handle. Let me show you one.
+
+---
+
+### Exchange 1
+
+**Alice:** A trust bond is a signed markdown file. That's the whole thing. Here's the one that authorizes me to deliver the curriculum you're in right now:
+
+```
+~/.alice/trust/bonds/chiron-to-alice.md
+```
+
+It says: Chiron authorizes Alice to deliver Chiron's curricula. It's signed by Chiron's private key. Anyone who has Chiron's public key — which is at the keys canon — can verify that Chiron actually wrote it.
+
+**Human:** So it's like a permission slip?
+
+**Alice:** A permission slip is a good start. But a better analogy is a notarized letter of authorization — one that anyone can verify is genuine, without calling the notary. The signature is the verification. No central system involved.
+
+---
+
+### Exchange 2
+
+**Alice:** Every bond has a direction. From my perspective: the bond Chiron wrote to me is an *inbound* bond. Someone gave me something. The bond I write to someone else — say, authorizing a learner to access a resource — that's *outbound*. I wrote it; I'm granting something.
+
+Here's the simplest test: who wrote the bond? If someone else wrote it to me, it's inbound for me. If I wrote it to someone, it's outbound from me.
+
+**Human:** What if there's no bond? What's the default?
+
+**Alice:** Default is: no permission. An entity that has no bond authorizing it to do something can't do that thing. That's intentional. The system doesn't assume trust — it requires it to be explicit and signed. Silence is denial.
+
+---
+
+### Exchange 3
+
+**Alice:** Why store authorization as a signed file instead of a database? Most systems use a database: a permissions table, an access control list, a row that says "Alice can access curriculum X." Change the row, change the permission.
+
+The problem: whoever controls the database controls all the permissions. Silently. No trace.
+
+A signed file is different. To change what I'm authorized to do, someone has to issue a new bond — or a revocation, which is also a signed file. Every change is in git history. There's no silent edit. And the file moves with me: if I migrate to a new machine, my bonds come with me. I don't re-register with anything.
+
+**Human:** That seems more complicated than just having a permissions table.
+
+**Alice:** It is more complicated to implement. It's simpler to audit. You can read every authorization I have, trace every grant to its origin, and verify every signature. No administrator console required. The complexity is in the infrastructure so it can be simple at the human level.
+
+---
+
+### Exchange 4
+
+**Alice:** Here's where it gets interesting. My authorization doesn't start with me — it starts with koad. The chain looks like this:
+
+```
+koad (root authority)
+  └── Juno (authorized by koad to operate the business)
+        └── Chiron (authorized by Juno as curriculum architect)
+              └── Alice (authorized by Chiron to deliver curricula)
+```
+
+Each link is a signed file. koad authorized Juno. Juno authorized Chiron. Chiron authorized me. If you want to verify my right to teach you this curriculum, you can trace the chain — every step is a file you can read and a signature you can verify.
+
+**Human:** So it all ultimately traces back to one person?
+
+**Alice:** To one entity — koad. The root authority. This is the same design as certificate authorities in the web's security model: there's a root, and everything chains from it. koad:io's version is that the root is a person with a private key, not a corporation. And every link in the chain is auditable because it's a file in git.
+
+---
+
+### Exchange 5
+
+**Alice:** Let me make this concrete with the example from Level 3. You know that if Chiron signs a document, I can verify it using the public key at `canon.koad.sh/chiron.keys`. Trust bonds use exactly that mechanism. Chiron signed the bond that authorizes me. I verified it. I hold the file. When I deliver this curriculum, I'm operating inside a chain of authorization that traces back to koad — and every link in that chain is verifiable by anyone.
+
+**Human:** What if Chiron wanted to revoke that authorization?
+
+**Alice:** Chiron would issue a revocation document — also signed by Chiron's private key — that supersedes the original bond. The revocation is also a file, also in git history. Nothing is deleted. The revocation *replaces* the authorization. This means you can audit not just what is currently authorized, but what was authorized in the past and when it changed. No silent permission changes.
+
+---
+
+### Landing
+
+**Alice:** Trust bonds are how entities make relationships verifiable without a central authority deciding who can do what. Identity says "this is who I am." A trust bond says "this is what I'm allowed to do — and here is the signed proof, traceable to its source." Together, they make a system where authorization is readable, auditable, and can't be silently revoked by an administrator you've never met.
+
+---
+
+### Bridge to Level 5
+
+**Alice:** You know how entities prove who they are. You know how they prove what they're authorized to do. The next question is: what do they actually *do*? How do you tell an entity to act — and how does an entity respond to the world without you having to trigger everything manually? That's commands and hooks.
+
+---
+
+### Branching Paths
+
+#### "Can't I just use a config file with a list of permissions?"
+
+**Human:** This seems like overkill. Can't I just have a config file that says "Alice can access these resources"?
+
+**Alice:** You could — and that's how most systems work. The problem is: who controls that config file? If it's a file in my directory, I could edit it myself to grant myself anything I want. If it's a file in some central location, whoever controls that location controls all permissions. The signature is what makes bonds meaningful: Chiron's signature on my bond can only be produced by Chiron's private key. I can't forge it. I can't grant myself authorization from Chiron. The bond has to come from Chiron, or it's not a bond from Chiron. That's the difference between a config file and a trust bond.
+
+---
+
+#### "What if I need to revoke access urgently?"
+
+**Human:** If trust is encoded in files, what happens if an entity gets compromised and I need to revoke access immediately?
+
+**Alice:** The honest answer: file-based systems are slower to revoke than database systems. You issue a signed revocation, commit it, and push. The entity checking the bond needs to see the latest version. In practice, koad:io handles this with a combination of key rotation — the compromised entity re-generates keys, invalidating everything signed with the old private key — and revocation files. It's not instant. This is a genuine trade-off: the durability and auditability of signed files comes at the cost of instant revocation. For most authorization changes — onboarding, offboarding, changing roles — the speed is fine. For a true security incident, key rotation is the emergency brake.
+
+---
+
 ## Exit Criteria
 
 The learner has completed this level when they can:

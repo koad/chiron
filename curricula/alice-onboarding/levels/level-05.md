@@ -99,6 +99,118 @@ Well-designed hooks are what make entities capable of autonomous operation. When
 
 ---
 
+## Dialogue
+
+### Opening
+
+**Alice:** You now know what entities are, how they establish identity, and how they authorize each other. Here's the next layer: what do entities actually *do*? And how does the difference between "I told it to do this" and "it did this on its own" work?
+
+That's the distinction between commands and hooks. It sounds simple. The implications are significant.
+
+---
+
+### Exchange 1
+
+**Alice:** A command is something you call. You type it, or another entity sends it — and the entity responds. Here's a real one:
+
+```
+juno commit self
+```
+
+That maps to a shell script at `~/.juno/commands/commit/self/command.sh`. You reached in. You initiated. The entity responded.
+
+**Human:** So it's like running any other shell script?
+
+**Alice:** Exactly — that's all it is. The pattern `commands/<verb>/<subcommand>/command.sh` is just a naming convention. What makes it powerful is that it's discoverable: you can look at `~/.juno/commands/` and see everything Juno can do. There's no hidden API. No documentation to look up. The filesystem is the interface.
+
+---
+
+### Exchange 2
+
+**Alice:** A hook is the opposite direction. You didn't initiate it — something in the world did. An event happened, and the system called the hook.
+
+Right now, I have a hook at `~/.alice/hooks/on-level-complete.sh`. You didn't run it. When you complete a level, the system runs it — records your completion, unlocks the next level, maybe sends a summary somewhere.
+
+You completed Level 3. You didn't type anything to make the system record that. The hook fired. That's a hook.
+
+**Human:** Who tells the system to fire the hook?
+
+**Alice:** The daemon — which you'll meet properly in Level 6. For now: the daemon watches for events, and when one matches a hook, it calls that hook. You don't have to be present. You don't have to initiate. The entity just... responds. The way a knee jerks when you tap it.
+
+---
+
+### Exchange 3
+
+**Alice:** When you run `juno commit self`, the system needs to find the right script. It looks in three places, in this order:
+
+1. Juno's own `commands/` directory — `~/.juno/commands/`
+2. The current directory's `commands/` folder
+3. The global framework commands — `~/.koad-io/commands/`
+
+The entity's own commands come first. Always.
+
+**Human:** Why does that matter?
+
+**Alice:** Because it's sovereignty in practice. The framework ships with default commands. But if Juno has its own version of a command — its own `commit/self` — Juno's version wins. The entity is not overridden by the framework. The framework provides defaults; the entity defines its own behavior where it wants to. This is the same idea as the file-over-cloud-service principle, but applied to commands: your local definition beats the global one.
+
+---
+
+### Exchange 4
+
+**Alice:** Here's the analogy that makes this stick for me. A command is like a hammer. You pick it up, you use it, you put it down. You decided to use it. Without you picking it up, nothing happens.
+
+A hook is like a reflex. You touch something hot and your hand pulls back before you've consciously decided to move it. The stimulus triggered a response — you didn't deliberate. The entity responds to its environment.
+
+**Human:** So hooks are more automatic.
+
+**Alice:** More than automatic — they're what makes an entity an *agent* rather than just a tool. A tool does what you tell it, when you tell it. An agent responds to the world. The hooks are where the agent's behavior lives. An entity without hooks is a very organized shell script collection. An entity with well-designed hooks is something that keeps working while you sleep.
+
+---
+
+### Exchange 5
+
+**Alice:** Think about what hooks enable. Right now, if someone files a GitHub Issue assigned to Juno, Juno's `on-issue-assigned.sh` hook fires. Juno reads the issue, creates a plan, files a response — all without a human doing anything after the issue was filed. That's not magic. It's a hook that runs a Claude session with the issue content. The autonomy is in the hook design.
+
+What would your entity do if you could define any hook you wanted? What events would you want it to respond to automatically?
+
+**Human:** I'd want it to respond when I get a specific kind of message, or when a file I care about changes.
+
+**Alice:** Those are exactly the right instincts. `on-message-received.sh`, `on-file-changed.sh` — both are hooks that entities in this system use. The design question isn't "what commands does my entity have?" — it's "what does my entity do when the world changes around it?" That question is where entity design actually lives.
+
+---
+
+### Landing
+
+**Alice:** Commands are how you reach in. Hooks are how the world reaches out. Both are shell scripts. Both follow a naming convention. But the difference between an entity that only has commands and one with well-designed hooks is the difference between a filing cabinet and a colleague. One waits for you. The other keeps working.
+
+---
+
+### Bridge to Level 6
+
+**Alice:** Commands run when called. Hooks fire when events happen. But something has to be watching for those events. Something has to route the right hook to the right entity. Something has to keep running while you close your laptop.
+
+That's the daemon. And the daemon is what makes the whole thing live.
+
+---
+
+### Branching Paths
+
+#### "How is this different from shell aliases or cron jobs?"
+
+**Human:** This sounds like shell aliases and cron jobs. What's actually different here?
+
+**Alice:** Shell aliases and cron jobs are yours, running in your environment, with no awareness of which entity they belong to. The command system is entity-aware: `juno commit self` knows it's running in Juno's context — it has access to Juno's git credentials, Juno's `.env`, Juno's directory. The hook system is event-aware: it fires in response to specific typed events from the daemon, not arbitrary time schedules. The difference is structure and context. You could do everything with shell aliases — but you'd also have to manually maintain the context, the routing, the discovery. The commands/hooks system provides that structure so entities have a consistent interface. The question isn't "can you do this with cron?" — it's "would you want to maintain fifty cron jobs with no entity context and no naming convention?"
+
+---
+
+#### "Can one entity's hook trigger another entity's command?"
+
+**Human:** Can Alice's hook call a Juno command? Can entities talk to each other?
+
+**Alice:** Yes — and that's where the system gets interesting. An entity's hook can call another entity's command directly, or it can file a GitHub Issue that the other entity's hook picks up. Both patterns exist. The GitHub Issue pattern is more common for asynchronous work — it creates a trail, it's human-readable, it goes through the same authorization checks. The direct command call is faster but tighter-coupled. The important thing is: when one entity calls another's command, the trust bond system still applies. Alice doesn't get to call Juno commands she's not authorized to call. The authorization infrastructure you saw in Level 4 is what makes inter-entity communication trustworthy.
+
+---
+
 ## Exit Criteria
 
 The learner has completed this level when they can:

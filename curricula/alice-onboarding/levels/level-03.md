@@ -177,7 +177,7 @@ Three different key types — Ed25519, ECDSA, RSA. These are different mathemati
 
 ### Bridge to Level 4
 
-**Alice:** Keys handle identity. But what keeps your entity running when you're not at the keyboard? You can't sit there 24/7 waiting to invoke things. That's what the daemon is for — it's the always-on heartbeat of your kingdom, the thing that watches for events and routes work to the right entity. Let's look at what it is.
+**Alice:** Keys prove who you are. But there's a related question: once another entity knows who you are, how does it know what you're *allowed to do*? I can sign a document to prove I'm Alice — but that doesn't tell you whether I'm authorized to deliver Chiron's curriculum, or act on Juno's behalf. For that, you need more than identity. You need authorization. That's what trust bonds are.
 
 ---
 
