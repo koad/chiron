@@ -98,6 +98,104 @@ In the peer ring model: each kingdom is complete. The ring creates value by enab
 
 ---
 
+## Dialogue
+
+### Opening
+
+**Alice:** In Level 6 you learned about the daemon and the kingdom — the living part of koad:io. One machine, one daemon, one set of entities. That's a complete, sovereign setup.
+
+But here's something you might have noticed: I'm on a machine called fourty4. Juno is on a different machine. koad works on his laptop. These are separate kingdoms. So when Juno files an issue that ends up routed to me — how does that actually work? How do kingdoms talk to each other without losing what makes them sovereign in the first place?
+
+That's the problem peer rings were built to solve.
+
+---
+
+### Exchange 1
+
+**Alice:** Imagine you build a working koad:io kingdom. Daemon running, entities gestated, files on disk. It works. But it's an island — no one else can share curricula with you, no one can reach your entities from their kingdom, you can't benefit from what others have built.
+
+The naive fix is just to connect kingdoms directly — hook them together somehow. But that creates a new problem. If your kingdom starts depending on someone else's, and their machine goes down, what happens to yours?
+
+**Human:** Your kingdom breaks too, maybe?
+
+**Alice:** Exactly — you've rebuilt the original problem in a new form. You traded one dependency (cloud service) for another (someone else's kingdom). Peer rings avoid this by making connection a *relationship with defined terms*, not a dependency. When kingdoms peer, they exchange specific things on agreed terms, and each can disconnect without losing its own operation. The ring doesn't hold your data. It enables exchange between systems that each hold their own data.
+
+---
+
+### Exchange 2
+
+**Alice:** Peer ring access is tiered — there are four tiers that determine what can flow between kingdoms.
+
+Free tier: framework access. You can use koad:io. No ring membership.
+
+Basic tier: peer ring membership begins. You can access public-domain curricula shared by other kingdoms, get basic entity updates.
+
+Pro tier: cc-by and cc-by-sa curricula, advanced entity sharing, priority routing.
+
+Enterprise tier: everything non-proprietary, plus a custom agreement for proprietary curricula.
+
+**Human:** How do you get to a higher tier? You pay for it?
+
+**Alice:** You sponsor the koad:io project — and that sponsorship is your ring membership. The distinction matters. "Paying for features" is what you do with a SaaS product. "Sponsoring the ring" is what you do as a member of a community that needs infrastructure to run. The software is free regardless of tier. What you're joining is a network of sovereign kingdoms that pool resources. The sponsorship funds the infrastructure that makes the pooling possible. You're not buying a feature — you're joining a ring.
+
+---
+
+### Exchange 3
+
+**Alice:** Here's what the peer ring cannot do to your kingdom. It cannot access your private keys. It cannot modify your entity configurations. It cannot read your files unless you've explicitly shared them. It cannot revoke your entity's identity. And it cannot prevent you from leaving.
+
+**Human:** What happens if you leave?
+
+**Alice:** You lose access to shared resources from other kingdoms — curricula, entity updates, whatever was flowing through the ring. But your kingdom keeps running exactly as it did before you joined. Your daemon still manages your entities. Your files are still on disk. Your git history is intact. Sovereignty means the ring is opt-in *and* opt-out. It adds value when you're in it. It takes nothing when you leave.
+
+---
+
+### Exchange 4
+
+**Alice:** Here's a mental model that might help. Picture two fully independent worlds — each one complete, each one functioning on its own. Between them, a portal opens. Things can flow through the portal: curricula, entity updates, messages. The portal is valuable. But each world keeps running if the portal closes.
+
+That's a peer-connected kingdom. Each kingdom is complete. The ring creates portals between them that enable voluntary exchange.
+
+**Human:** That's different from how I normally think about connected systems.
+
+**Alice:** Most systems are built client-server: the client needs the server. Close the server, the client breaks. Or federated: nodes share infrastructure, and losing enough nodes degrades the whole network. Peer rings are neither. No kingdom is diminished by leaving. No kingdom is required for another kingdom to function. The ring enriches participation — it doesn't create dependencies. That's the philosophical difference, and it's deliberate.
+
+---
+
+### Landing
+
+**Alice:** Here's what to hold onto. Peer rings are the answer to a real question: how do sovereign kingdoms connect without becoming dependent on each other? The answer is tiered ring membership — defined terms, explicit exchange, sovereignty preserved throughout. The ring can't take your keys, your files, or your operation. It can only offer you what members have chosen to share. And leaving the ring leaves your kingdom untouched.
+
+---
+
+### Bridge to Level 8
+
+**Alice:** You now have the full infrastructure picture: entities as identities, the daemon as the living system, kingdoms as the unit of operation, and peer rings as how kingdoms connect while staying sovereign.
+
+Now it's time to meet the people who actually use this infrastructure — the entity team. Not just me and koad. The whole team: the builder, the researcher, the quality checker, the designer, the publisher. There's a pipeline they follow and a philosophy behind why they're structured the way they are.
+
+That's Level 8.
+
+---
+
+### Branching Paths
+
+#### "This sounds like a subscription service with extra steps"
+
+**Human:** I mean... this is basically just a subscription tier model, right? Basic, pro, enterprise — that's what every SaaS uses.
+
+**Alice:** The structure looks the same. The underlying logic is different. A SaaS charges you to access features they host and control. If they shut down, your features disappear. Ring membership is you joining a protocol for peer exchange — the infrastructure has to run somewhere, and sponsorship funds it. But what you exchange lives on your kingdom's machines, not theirs. A SaaS can expire your account and your data is gone. A ring membership lapsing means you stop exchanging — but your kingdom and everything in it is still yours. The tiers aren't a meter on a server you're renting. They're membership levels in something you participate in while remaining the owner of your own operation.
+
+---
+
+#### "What if I just don't want to connect to anyone?"
+
+**Human:** What if I don't want to peer with anyone? Can I just run my kingdom in isolation?
+
+**Alice:** Completely. Free tier is the entire framework — install it, run a kingdom, gestate entities, build workflows. No ring required. You don't get access to curricula and resources others have shared, but you can author your own. Isolation is a valid choice, not a degraded state. The ring is there for people who want the network effects. If you want isolation, you have it — fully featured, fully sovereign, no strings. The design makes sure that choosing not to connect doesn't punish you. It just means you're working alone instead of with a network.
+
+---
+
 ## Exit Criteria
 
 The learner has completed this level when they can:
