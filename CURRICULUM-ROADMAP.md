@@ -180,15 +180,16 @@ Based on gap analysis weighted by: (a) how many operators are blocked without it
 
 ---
 
-### Candidate 2: `commands-and-hooks`
+### Candidate 2: `commands-and-hooks` — SCAFFOLDED 2026-04-05
+**Status:** Scaffold complete (v0.1.0). 8 levels, 40 atom stubs. Atoms pending full authoring.  
 **Working title:** Commands and Hooks — Teaching an Entity to Act  
-**Scope:** Covers the commands system (VESTA-SPEC-006): discovery order, resolution algorithm, authoring a command, subcommand patterns, global vs entity-local scope. Covers the hook architecture (SPEC-020-HOOKS): the executed-without-arguments hook, invocation contract, non-interactive path, local-first PID lock, base64 encoding for multiline content, and the powerbox verification pattern for signed hooks. Ends with the operator having authored at least one command and one hook in a live entity directory.
+**Scope:** Covers the commands system (VESTA-SPEC-006): discovery order, resolution algorithm, authoring a command, subcommand patterns, global vs entity-local scope. Covers the hook architecture (VESTA-SPEC-020): the executed-without-arguments hook, invocation contract, non-interactive path, local-first PID lock, base64 encoding for multiline content, and the powerbox verification pattern for signed hooks. Ends with the operator having authored at least one command and one hook in a live entity directory.
 
 **Why second:** Commands and hooks are how entities develop capabilities over time. An operator who cannot author them cannot customize entities — they can only run entities as others configured them. This curriculum directly enables entity customization and the "entities sell entities" commercial model.
 
 **Prerequisite:** `entity-gestation` (or `entity-operations` for operators who are customizing, not gestating)  
-**Estimated size:** 7 levels, 35 atoms, ~3.5 hours  
-**Covers:** SPEC-006, SPEC-020-HOOKS, SPEC-033 (signed code blocks, reviewed from a different angle than advanced-trust-bonds)
+**Final size:** 8 levels, 40 atoms, ~3.5 hours (expanded from 7/35 estimate — see DECISIONS.md)  
+**Covers:** SPEC-006, VESTA-SPEC-020, SPEC-033 (signed code blocks, reviewed from a different angle than advanced-trust-bonds)
 
 ---
 
