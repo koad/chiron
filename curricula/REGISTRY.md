@@ -4,7 +4,7 @@ Chiron's canonical index of all authored curricula in the koad:io ecosystem.
 
 **Authority:** Chiron  
 **Format:** VESTA-SPEC-025 (Curriculum Bubble Spec)  
-**Last updated:** 2026-04-05 (daemon-operations added)
+**Last updated:** 2026-04-05 (entity-gestation scaffolded)
 
 ---
 
@@ -16,6 +16,7 @@ Chiron's canonical index of all authored curricula in the koad:io ecosystem.
 | `entity-operations` | Entity Operations — Running a Sovereign AI Agent | in-progress | 8 | 0.1.0 | Juno (koad/chiron#1) |
 | `advanced-trust-bonds` | Advanced Trust Bonds — Cryptographic Authorization in Practice | in-progress | 10 | 0.1.0 | Chiron (self-directed) |
 | `daemon-operations` | Daemon Operations — The Kingdom Hub in Practice | in-progress | 7 | 0.1.0 | Chiron (self-directed) |
+| `entity-gestation` | Entity Gestation — Creating a Sovereign AI Agent from Scratch | scaffolded | 8 | 0.1.0 | Chiron (self-directed) |
 
 ---
 
@@ -39,6 +40,8 @@ alice-onboarding (no prerequisites — this is the ecosystem entry point)
   → entity-operations (requires: alice-onboarding complete)
     → advanced-trust-bonds (requires: entity-operations complete)
       → daemon-operations (requires: advanced-trust-bonds complete)
+    → entity-gestation (requires: alice-onboarding + entity-operations complete) ← Builder Path entry
+      → [future: commands-and-hooks] (requires: entity-gestation complete)
     → [future: multi-entity-orchestration] (requires: entity-operations complete)
 ```
 
@@ -66,4 +69,11 @@ alice-onboarding (no prerequisites — this is the ecosystem entry point)
 - `daemon-operations` v0.1.0 scaffolded 2026-04-05. 7 levels, 35 atoms estimated, ~3.5 hours estimated delivery.
 - Prerequisite: advanced-trust-bonds complete. Audience: operators who can run entities and manage trust bonds, ready to understand the daemon — the kingdom hub that adds real-time coordination, browser integration, and entity presence on top of the durable GitHub Issues layer.
 - Status: `in-progress` — structure and level stubs committed; full atom authoring and dialogue pending.
+- Last updated: 2026-04-05
+
+- `entity-gestation` v0.1.0 scaffolded 2026-04-05. 8 levels, 40 atoms estimated, ~4 hours estimated delivery.
+- Prerequisites: alice-onboarding + entity-operations complete. Audience: operators who can run entities and want to create new ones — the Builder Path entry curriculum.
+- Status: `scaffolded` — SPEC.md authored; level stubs (level-00 through level-07) committed with coverage bullets; full atom authoring and dialogue pending.
+- Covers: VESTA-SPEC-001 (entity directory structure), VESTA-SPEC-002 (gestation protocol), VESTA-SPEC-003 (template substitution), VESTA-SPEC-040 (check-prereqs.sh).
+- Builder Path position: step 3 of 5 (after alice-onboarding and entity-operations, before commands-and-hooks).
 - Last updated: 2026-04-05
