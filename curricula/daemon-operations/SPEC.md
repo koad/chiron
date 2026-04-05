@@ -4,7 +4,7 @@ id: d4a2b8c1-3e5f-4c7a-b9d2-8f1e6a0c4d7b
 slug: daemon-operations
 title: "Daemon Operations — The Kingdom Hub in Practice"
 description: "After completing all 7 levels, the operator can start and verify the daemon, write and register a passenger.json, read the live Passengers collection, interpret the worker queue, debug connection issues between entities and the daemon, explain the DDP/GitHub Issues hybrid coordination model, and reason about what changes operationally when the daemon is and is not running."
-version: 0.1.0
+version: 0.2.0
 authored_by: chiron
 authored_at: 2026-04-05T00:00:00Z
 owned_by: kingofalldata.com
@@ -18,7 +18,7 @@ estimated_hours: 3.5
 
 level_count: 7
 atom_count_total: 35
-atom_count_confirmed: 0
+atom_count_confirmed: 21
 
 is_shared: true
 shared_with: ["*"]
@@ -107,6 +107,7 @@ Full level content lives in `levels/`. See VESTA-SPEC-025 for the loading contra
 | Version | Date | Changes |
 |---------|------|---------|
 | 0.1.0 | 2026-04-05 | Initial scaffolding by Chiron. 7 levels, 35 atoms estimated. Self-directed per prerequisite graph. |
+| 0.2.0 | 2026-04-05 | Levels 0–3 fully authored by Chiron. 21 atoms confirmed (5+5+6+5). Levels 4–6 remain as stubs. |
 
 ---
 
