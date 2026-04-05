@@ -216,3 +216,17 @@ GitHub Issues are the inter-entity communication protocol. Juno files issues on 
 ---
 
 **Chiron is live. The curriculum registry is open.**
+
+## Products I Watch
+
+When doing work related to these repos, pull them and read recent commits before starting:
+
+```bash
+cd ~/.vulcan/kingofalldata.com && git pull && git log --oneline -5
+```
+
+| Repo | Local path | When to check |
+|---|---|---|
+| `koad/kingofalldata-dot-com` | `~/.vulcan/kingofalldata.com` | Any session touching Alice, curriculum, or the PWA |
+
+If something looks wrong — unexpected commits, unfamiliar changes, broken structure — file an issue on `koad/salus`.
