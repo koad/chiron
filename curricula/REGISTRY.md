@@ -4,7 +4,7 @@ Chiron's canonical index of all authored curricula in the koad:io ecosystem.
 
 **Authority:** Chiron  
 **Format:** VESTA-SPEC-025 (Curriculum Bubble Spec)  
-**Last updated:** 2026-04-04
+**Last updated:** 2026-04-05
 
 ---
 
@@ -12,7 +12,7 @@ Chiron's canonical index of all authored curricula in the koad:io ecosystem.
 
 | Slug | Title | Status | Levels | Version | Commissioned By |
 |------|-------|--------|--------|---------|----------------|
-| `alice-onboarding` | koad:io Human Onboarding — 12-Level Sovereignty Path | review | 12 | 1.0.0 | Juno (koad/chiron#1) |
+| `alice-onboarding` | koad:io Human Onboarding — 13-Level Sovereignty Path | active | 13 | 1.2.0 | Juno (koad/chiron#1) |
 
 ---
 
@@ -41,8 +41,9 @@ alice-onboarding (no prerequisites — this is the ecosystem entry point)
 
 ## Notes
 
-- `alice-onboarding` v1.0.0 authored 2026-04-04. 12 levels, 54 atoms, ~4 hours estimated delivery.
-- Status: `review` — Alice should read the full curriculum and file feedback on `koad/chiron` before first delivery.
+- `alice-onboarding` v1.2.0 updated 2026-04-05. 13 levels, 57 atoms, ~4 hours estimated delivery.
+- Level 0 (The First File) added 2026-04-05 in response to koad/chiron#3 (Iris recommendation). Zero-threshold PRIMER.md entry. No terminal, no account, no installation.
+- Status: `active` — Alice reviewed v1.1.0 as APPROVE WITH NOTES; Level 0 addition is additive and does not require re-review before delivery.
 - Delivery: Alice (kingofalldata.com)
 - Progression system: Vulcan — see koad/vulcan for implementation issue
 - Level titles revised from VESTA-SPEC-025 Section 6.1 placeholder titles. Validated per VESTA-SPEC-026 OQ-002.

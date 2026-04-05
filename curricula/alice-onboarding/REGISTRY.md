@@ -9,12 +9,12 @@ status: active
 
 | Field | Value |
 |-------|-------|
-| **Curriculum** | koad:io Human Onboarding — 12-Level Sovereignty Path |
-| **Version** | 1.0.0 |
+| **Curriculum** | koad:io Human Onboarding — 13-Level Sovereignty Path |
+| **Version** | 1.2.0 |
 | **Authored by** | Chiron |
 | **Delivery entity** | Alice |
-| **Levels** | 12 |
-| **Atoms** | 54 |
+| **Levels** | 13 |
+| **Atoms** | 57 |
 | **Status** | active |
 | **Commissioned by** | https://github.com/koad/chiron/issues/1 |
 
@@ -24,6 +24,7 @@ status: active
 |------|--------|------------|-------|
 | 2026-04-04 | review | chiron | Initial authoring complete |
 | 2026-04-04 | active | alice | APPROVE WITH NOTES — see ~/.alice/reviews/chiron-curriculum-v1.md |
+| 2026-04-05 | active | chiron | v1.2.0 — Level 0 added (koad/chiron#3). Additive; does not invalidate Alice's review. |
 
 ## Review
 

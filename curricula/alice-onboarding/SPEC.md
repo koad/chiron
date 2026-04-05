@@ -4,7 +4,7 @@ id: a9f3c2e1-7b4d-4e8a-b5f6-2d1c9e0a3f7b
 slug: alice-onboarding
 title: "koad:io Human Onboarding — 12-Level Sovereignty Path"
 description: "After completing all 12 levels, the learner understands sovereign infrastructure, can navigate an entity directory, articulates why trust bonds matter, and has made a cryptographically signed commitment to operating with sovereignty."
-version: 1.1.0
+version: 1.2.0
 authored_by: chiron
 authored_at: 2026-04-04T12:00:00Z
 owned_by: kingofalldata.com
@@ -15,8 +15,8 @@ prerequisites: []
 audience: "Humans new to the koad:io ecosystem. Basic CLI familiarity assumed (can open a terminal, run a command, understand what a directory is). No prior knowledge of sovereign infrastructure, trust bonds, or entity architecture required."
 estimated_hours: 4
 
-level_count: 12
-atom_count_total: 54
+level_count: 13
+atom_count_total: 57
 
 is_shared: true
 shared_with: ["*"]
@@ -36,15 +36,19 @@ Alice delivers this curriculum conversationally, one level at a time. The learne
 ## Entry Prerequisites
 
 The learner can:
-- Open a terminal (or knows what one is)
-- Navigate to a directory (or can be shown how)
-- Read a markdown file
+- Open a folder on their computer (any operating system)
+- Create a text file (with any editor)
+
+The learner does NOT need to:
+- Know what a terminal is (Level 0 offers a terminal shortcut but accepts any text editor)
+- Navigate on the command line
 
 The learner does NOT need to:
 - Know what an "entity" is
 - Know what SSH is for
 - Have any existing koad:io installation
 - Know what GPG or sovereign infrastructure means
+- Know what a terminal is (Level 0 accommodates any text editor)
 
 These are taught by the curriculum itself.
 
@@ -70,6 +74,7 @@ After completing all 12 levels, the learner will be able to:
 
 | # | Title | Atoms | Minutes |
 |---|-------|-------|---------|
+| 0 | The First File | 3 | 10 |
 | 1 | First Contact — What Is This? | 4 | 15 |
 | 2 | What Is an Entity? | 5 | 20 |
 | 3 | Your Keys Are You | 4 | 20 |
@@ -93,6 +98,7 @@ Full level content lives in `levels/`. See VESTA-SPEC-025 for the loading contra
 |---------|------|---------|
 | 1.0.0 | 2026-04-04 | Initial authoring by Chiron. 12 levels, 54 atoms total. |
 | 1.1.0 | 2026-04-04 | Revisions in response to Alice's review (APPROVE WITH NOTES). Level 3: added wax-seal signing analogy to delivery notes. Level 6: added kingdom-awareness exit criterion and second assessment question. Level 8: reordered atoms — pipeline first (8.1), then entity roster (8.2). Level 9 Atom 9.4: reframed as pattern-first (event bridge), GitClaw named as one implementation. Level 11: added delivery note for PWA sovereignty tension. |
+| 1.2.0 | 2026-04-05 | Added Level 0: The First File. Zero-threshold entry point — PRIMER.md in any folder. 3 atoms, 10 minutes. No terminal or installation required. Addresses koad/chiron#3 (Iris recommendation). Entry prerequisites updated to reflect lower floor. Total: 13 levels, 57 atoms. |
 
 ---
 
