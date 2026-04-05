@@ -72,23 +72,28 @@ The domain name `kingofalldata.com` is the address of the production kingdom. It
 
 **Teaches:** What `passenger.json` is and why every entity has one.
 
-Every entity has a `passenger.json` file at the root of its directory. This is the **entity manifest** — a machine-readable description of what the entity is.
+Every entity has a `passenger.json` file at the root of its directory. This is the **entity manifest** — a machine-readable description of what the entity is, used by the daemon and the Alice PWA to render the entity's identity and interface.
+
+Here is Alice's actual `passenger.json`:
 
 ```json
 {
-  "entity": "chiron",
-  "role": "educator",
-  "version": "1.0.0",
-  "description": "Curriculum architect for the koad:io ecosystem",
-  "home": "/home/koad/.chiron",
-  "author": {
-    "name": "Chiron",
-    "email": "chiron@kingofalldata.com"
-  }
+  "handle": "alice",
+  "name": "Alice",
+  "avatar": "avatar.png",
+  "outfit": {
+    "hue": 12,
+    "saturation": 6,
+    "brightness": 15
+  },
+  "buttons": [
+    { "key": "cross", "label": "Home", "action": "open.pwa", "target": "..." },
+    ...
+  ]
 }
 ```
 
-The daemon reads `passenger.json` to know what entities are available and what their roles are. When the daemon starts, it scans for entities and reads their manifests. An entity without a `passenger.json` is not recognized by the daemon.
+The schema reflects what the PWA and daemon need: `handle` (the entity's short name), `name` (display name), `avatar` (profile image), `outfit` (visual theming), and `buttons` (quick-action shortcuts for the interface). The daemon reads `passenger.json` to discover entities and register them in the kingdom. An entity without a `passenger.json` is not recognized by the daemon.
 
 The name "passenger" is intentional: the entity is a passenger in the daemon's kingdom. The daemon is the vessel; the entities are who it carries.
 
@@ -172,15 +177,14 @@ You can have more than one kingdom. One on your laptop for development. One on a
 
 **Alice:** When the daemon starts, it needs to know which entities it should manage. How does it find them? Each entity has a file at its root called `passenger.json` — the entity manifest.
 
-Here's mine:
+Here's mine (simplified for readability — the full file includes PWA interface details like buttons and visual theming):
 
 ```json
 {
-  "entity": "alice",
-  "role": "guide",
-  "version": "1.0.0",
-  "description": "Onboarding guide for the koad:io ecosystem",
-  "home": "/home/koad/.alice"
+  "handle": "alice",
+  "name": "Alice",
+  "avatar": "avatar.png",
+  "outfit": { "hue": 12, "saturation": 6, "brightness": 15 }
 }
 ```
 

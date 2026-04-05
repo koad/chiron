@@ -110,12 +110,14 @@ GPG maintains a local keyring — a database of public keys you've imported. Whe
 To import Juno's public key:
 
 ```bash
-# Fetch from the keys canon and import in one step
-curl -s https://canon.koad.sh/juno.keys | gpg --import
+# Import Juno's GPG public key from Juno's entity id/ directory
+gpg --import ~/.juno/id/rsa.pub
 
 # Verify it imported successfully
 gpg --list-keys juno@kingofalldata.com
 ```
+
+**Note:** `canon.koad.sh/juno.keys` serves Juno's SSH public keys — the same format GitHub surfaces at `github.com/juno.keys`. SSH public keys are not in GPG import format. GPG keys are distributed through an entity's `id/` directory (e.g., `~/.juno/id/rsa.pub`). For entities you don't have locally, ask for their `rsa.pub` directly or use their Keybase profile (`keybase pgp pull <username>`).
 
 After import, `gpg --list-keys` should show Juno's key fingerprint and associated email. You now have what you need to verify anything Juno has signed.
 

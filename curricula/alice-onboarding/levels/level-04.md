@@ -60,7 +60,7 @@ An example bond: `juno-to-chiron.md`
 bond: juno-to-chiron
 issuer: juno
 recipient: chiron
-type: authorized-curriculum-architect
+type: authorized-specialist
 issued: 2026-04-04
 ---
 Juno authorizes Chiron to architect curricula on behalf of the koad:io ecosystem.
@@ -77,8 +77,9 @@ This file is signed by Juno. Anyone who has Juno's public key can verify that Ju
 Every bond has a direction. From Chiron's perspective:
 
 **Inbound bonds** — bonds issued TO Chiron by others. These grant Chiron authority to do things:
-- `juno-to-chiron.md` — Juno authorizes Chiron as curriculum architect
-- `koad-to-chiron.md` — koad authorizes Chiron to exist and operate
+- `juno-to-chiron.md` — Juno authorizes Chiron as curriculum architect (this bond exists in the live system)
+
+Note: A direct `koad-to-chiron.md` bond does not exist in the live system. Chiron's authority flows from koad through Juno — koad authorized Juno (`koad-to-juno.md`), and Juno authorized Chiron (`juno-to-chiron.md`). Direct koad → Chiron bonds are shown in some examples as illustrations of what the system supports, but the actual chain is: koad → Juno → Chiron.
 
 **Outbound bonds** — bonds issued BY Chiron to others. These grant others authority to use Chiron's work:
 - `chiron-to-alice.md` — Chiron authorizes Alice to deliver Chiron's curricula
@@ -115,8 +116,8 @@ Trust in koad:io flows from a root authority:
 koad (root authority)
   └── Juno (authorized-agent — operates business on koad's behalf)
         ├── Vulcan (authorized-builder)
-        ├── Chiron (authorized-curriculum-architect)
-        └── Alice (authorized-guide)
+        ├── Chiron (authorized-specialist — curriculum architect)
+        └── Alice (authorized-specialist — onboarding guide)
 ```
 
 This is a **trust chain**. Juno's authority comes from koad's bond. Chiron's authority comes from Juno's bond. Each link in the chain is a signed file.
@@ -141,7 +142,7 @@ Hash: SHA512
 bond: juno-to-chiron
 issuer: juno
 recipient: chiron
-type: authorized-curriculum-architect
+type: authorized-specialist
 issued: 2026-04-04
 ---
 Juno authorizes Chiron to architect curricula on behalf of the koad:io ecosystem.
@@ -172,8 +173,9 @@ ls ~/.juno/trust/bonds/
 
 **Step 2: Import the issuer's public key** (from Level 3, Atom 3.5).
 ```bash
-curl -s https://canon.koad.sh/juno.keys | gpg --import
+gpg --import ~/.juno/id/rsa.pub
 ```
+(Use the entity's `id/rsa.pub` file — not `canon.koad.sh`, which serves SSH public keys, not GPG keys.)
 
 **Step 3: Run the verification.**
 ```bash
@@ -293,7 +295,7 @@ Hash: SHA512
 bond: juno-to-chiron
 issuer: juno
 recipient: chiron
-type: authorized-curriculum-architect
+type: authorized-specialist
 issued: 2026-04-04
 ---
 Juno authorizes Chiron to architect curricula on behalf of the koad:io ecosystem.
@@ -322,9 +324,9 @@ ls ~/.juno/trust/bonds/
 
 You should see files ending in `.asc` — those are the signed bonds.
 
-Step two: import Juno's public key from the keys canon. You learned this pattern in Level 3.
+Step two: import Juno's public key from Juno's entity directory. You learned this pattern in Level 3.
 ```bash
-curl -s https://canon.koad.sh/juno.keys | gpg --import
+gpg --import ~/.juno/id/rsa.pub
 ```
 
 Step three: verify.

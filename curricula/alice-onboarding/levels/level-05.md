@@ -53,11 +53,16 @@ Commands are the entity's **interface for humans**. They expose specific capabil
 
 A **hook** is something the system calls. An event happens — an issue is filed, a file changes, a session starts — and the hook runs automatically.
 
-Hooks live in `hooks/` directories:
+Hooks live in `hooks/` directories. The only hook currently implemented in the live system is:
 ```
-~/.juno/hooks/on-issue-assigned.sh    ← Runs when GitHub assigns Juno an issue
-~/.chiron/hooks/author-curriculum.sh  ← System-callable: given a brief, author curriculum
-~/.alice/hooks/on-level-complete.sh   ← Runs when a learner completes a level
+~/.juno/hooks/executed-without-arguments.sh  ← Runs when juno is invoked with no arguments
+```
+
+The following are examples of hooks that represent intended behavior — they illustrate the pattern but are **not yet implemented** in the live system:
+```
+~/.juno/hooks/on-issue-assigned.sh    ← (future) Runs when GitHub assigns Juno an issue
+~/.chiron/hooks/author-curriculum.sh  ← (future) System-callable: given a brief, author curriculum
+~/.alice/hooks/on-level-complete.sh   ← (future) Runs when a learner completes a level
 ```
 
 The distinction is about initiative: **commands** are user-initiated, **hooks** are system-initiated.
@@ -129,9 +134,9 @@ That maps to a shell script at `~/.juno/commands/commit/self/command.sh`. You re
 
 **Alice:** A hook is the opposite direction. You didn't initiate it — something in the world did. An event happened, and the system called the hook.
 
-Right now, I have a hook at `~/.alice/hooks/on-level-complete.sh`. You didn't run it. When you complete a level, the system runs it — records your completion, unlocks the next level, maybe sends a summary somewhere.
+Imagine a hook at `~/.alice/hooks/on-level-complete.sh`. You didn't run it. When you complete a level, the system runs it — records your completion, unlocks the next level, maybe sends a summary somewhere. (This specific hook is planned for the live system; the pattern is already used by hooks like `~/.juno/hooks/executed-without-arguments.sh`.)
 
-You completed Level 3. You didn't type anything to make the system record that. The hook fired. That's a hook.
+That's the hook model: the system calls out; you didn't initiate it. That's what makes it different from a command.
 
 **Human:** Who tells the system to fire the hook?
 
@@ -169,13 +174,13 @@ A hook is like a reflex. You touch something hot and your hand pulls back before
 
 ### Exchange 5
 
-**Alice:** Think about what hooks enable. Right now, if someone files a GitHub Issue assigned to Juno, Juno's `on-issue-assigned.sh` hook fires. Juno reads the issue, creates a plan, files a response — all without a human doing anything after the issue was filed. That's not magic. It's a hook that runs a Claude session with the issue content. The autonomy is in the hook design.
+**Alice:** Think about what hooks enable. When someone files a GitHub Issue assigned to Juno, a hook fires — Juno reads the issue, creates a plan, files a response — all without a human doing anything after the issue was filed. That's not magic. It's a hook that runs a Claude session with the issue content. The autonomy is in the hook design. (This pattern is the direction the `on-issue-assigned.sh` hook is being built toward; the current live hook `executed-without-arguments.sh` already demonstrates the mechanism.)
 
 What would your entity do if you could define any hook you wanted? What events would you want it to respond to automatically?
 
 **Human:** I'd want it to respond when I get a specific kind of message, or when a file I care about changes.
 
-**Alice:** Those are exactly the right instincts. `on-message-received.sh`, `on-file-changed.sh` — both are hooks that entities in this system use. The design question isn't "what commands does my entity have?" — it's "what does my entity do when the world changes around it?" That question is where entity design actually lives.
+**Alice:** Those are exactly the right instincts. `on-message-received.sh`, `on-file-changed.sh` — those are examples of hooks the system is designed to support. The design question isn't "what commands does my entity have?" — it's "what does my entity do when the world changes around it?" That question is where entity design actually lives.
 
 ---
 

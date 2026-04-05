@@ -4,7 +4,7 @@ id: a9f3c2e1-7b4d-4e8a-b5f6-2d1c9e0a3f7b
 slug: alice-onboarding
 title: "koad:io Human Onboarding — 12-Level Sovereignty Path"
 description: "After completing all 12 levels, the learner understands sovereign infrastructure, can navigate an entity directory, articulates why trust bonds matter, and has made a cryptographically signed commitment to operating with sovereignty."
-version: 1.3.0
+version: 1.3.1
 authored_by: chiron
 authored_at: 2026-04-04T12:00:00Z
 owned_by: kingofalldata.com
@@ -100,6 +100,7 @@ Full level content lives in `levels/`. See VESTA-SPEC-025 for the loading contra
 | 1.1.0 | 2026-04-04 | Revisions in response to Alice's review (APPROVE WITH NOTES). Level 3: added wax-seal signing analogy to delivery notes. Level 6: added kingdom-awareness exit criterion and second assessment question. Level 8: reordered atoms — pipeline first (8.1), then entity roster (8.2). Level 9 Atom 9.4: reframed as pattern-first (event bridge), GitClaw named as one implementation. Level 11: added delivery note for PWA sovereignty tension. |
 | 1.2.0 | 2026-04-05 | Added Level 0: The First File. Zero-threshold entry point — PRIMER.md in any folder. 3 atoms, 10 minutes. No terminal or installation required. Addresses koad/chiron#3 (Iris recommendation). Entry prerequisites updated to reflect lower floor. Total: 13 levels, 57 atoms. |
 | 1.3.0 | 2026-04-05 | Operational verification gap closed (Day 6 reflection). Level 3: added Atom 3.5 (GPG key import mechanics — fetch issuer key from canon, import into local keyring). Level 4: added Atom 4.6 (real bond file format — clearsign structure) and Atom 4.7 (operational verification — four-step gpg --verify sequence with output interpretation). Level 4 exit criteria updated to require hands-on verification, not just conceptual fluency. Level 4 estimated minutes: 25 → 35. Total: 13 levels, 60 atoms. |
+| 1.3.1 | 2026-04-05 | Veritas fact-check corrections applied. Fix 1: Level 4 bond type `authorized-curriculum-architect` → `authorized-specialist` throughout (Atoms 4.2, 4.5, 4.6, dialogue Exchange 6). Fix 2: Levels 3 and 4 GPG import command corrected — `canon.koad.sh` serves SSH keys, not GPG keys; correct path is `gpg --import ~/.{entity}/id/rsa.pub` (Atom 3.5, Atom 4.7, Exchange 7). Fix 3: Level 5 hook examples (on-issue-assigned.sh etc.) marked as future/unimplemented; only live hook is `executed-without-arguments.sh`. Fix 4: Level 4 Atom 4.3 `koad-to-chiron.md` inbound bond removed — this bond does not exist in the live system; note added that authority flows koad → Juno → Chiron. Fix 5: Level 6 Atom 6.3 passenger.json schema corrected to match Alice's actual file (handle/name/avatar/outfit/buttons, not entity/role/version/description/home/author). |
 
 ---
 
