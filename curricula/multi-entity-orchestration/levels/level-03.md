@@ -5,7 +5,7 @@ curriculum_slug: multi-entity-orchestration
 level: 3
 slug: background-execution-and-parallel-delegation
 title: "Background Execution and Parallel Delegation"
-status: scaffold
+status: authored
 prerequisites:
   curriculum_complete:
     - commands-and-hooks
@@ -32,86 +32,147 @@ After completing this level, the operator will be able to:
 
 ## Atom 3.1: Why Background-First
 
-[STUB — Content to be authored]
+`run_in_background: true` is not a performance optimization. It is the correct model for how entity work happens: independently, asynchronously, without the orchestrator blocking.
 
-Core content to cover:
-- From VESTA-SPEC-054 §2.1: "Entities do independent work. Waiting for entity A to finish before starting entity B is unnecessary coupling when A and B are working on unrelated problems."
-- Background execution enables true parallel orchestration. When Sibyl researches and Faber drafts on unrelated topics, they can run simultaneously. The results come in as they complete; the orchestrator does not wait.
-- The alternative (blocking sequential, `run_in_background: false`) is appropriate only when the next action cannot be determined until the entity's output is known. This is rare — more often, the orchestrator knows the full plan and can launch all entities simultaneously.
-- Background-first is the default. Blocking is the exception. The question to ask before a blocking invocation: "Does the next action depend on what this entity produces?" If yes: block (and pace). If no: background.
-- Practical implication: if you are invoking more than one entity, your default assumption should be "can these run in parallel?" Only fall back to sequential when the dependency exists.
+VESTA-SPEC-054 §2.1 states the principle directly: "Entities do independent work. Waiting for entity A to finish before starting entity B is unnecessary coupling when A and B are working on unrelated problems." When Sibyl researches ICM patterns and Faber updates the Day 6 content brief simultaneously, neither entity needs the other to finish first. Blocking on Sibyl would add minutes of unnecessary latency before Faber starts — and produce identical results.
+
+**Background execution enables the observe loop to work correctly.** When entities run in the background, the orchestrator does not sit idle — it continues its own work, tracks incoming notifications, and acts on results as they arrive. This is the "observe" step of launch-observe-decide. A blocking invocation suspends the entire observe loop until the entity finishes; background execution keeps the loop alive.
+
+**`run_in_background: false` (blocking mode) is the exception, not the rule.** Use it only when the next action literally cannot be determined until the entity's output is in hand — and even then, consider whether the dependency is real or assumed. If the orchestrator can describe what the next action is before the entity starts, the invocation should be background.
+
+**The default question before every invocation:** "Does the next action depend on what this entity produces, and can I not know what that next action is until I see the output?" If the answer is yes to both: blocking (with rate pacing). If no: background.
+
+In practice, the koad:io team is rarely so tightly coupled that a blocking invocation is required. The pattern you will use most often is: launch multiple entities in background mode, observe as notifications arrive, decide based on what actually came back.
+
+> **Verification step:** State in one sentence when `run_in_background: false` is the correct choice. Then state in one sentence when it is incorrect. If you can state both, you have the background-first default installed.
 
 ---
 
 ## Atom 3.2: Running Multiple Entities in Parallel — One Message
 
-[STUB — Content to be authored]
+Multiple Agent tool calls placed in a single message run in parallel. They start at the same time, operate in independent contexts, and each produces its own notification when complete.
 
-Core content to cover:
-- Multiple Agent tool calls in a single message are independent and run in parallel.
-- From VESTA-SPEC-054 §2.3, the pattern:
-  ```
-  Message:
-    Agent(cwd=~/.sibyl/, prompt="...", run_in_background=true)
-    Agent(cwd=~/.faber/, prompt="...", run_in_background=true)
-    Agent(cwd=~/.mercury/, prompt="...", run_in_background=true)
-  ```
-- All three invocations start simultaneously. Each runs in its own context. The orchestrator receives three separate notifications as each completes.
-- When to proceed: either wait for all three notifications before the next decision, or proceed on the first and handle subsequent results as they come in. The choice depends on whether the next action requires all three results or can be triggered by any one.
-- No rate pacing needed for parallel invocations — they are simultaneous, not chained. Rate pacing only applies when one invocation follows another sequentially.
-- Practical limit: launching too many entities simultaneously risks resource contention. In practice, the koad:io team is small enough (4–6 entities at a time) that this is rarely a concern.
+From VESTA-SPEC-054 §2.3, the pattern looks like this in a single orchestrating message:
+
+```
+[Juno's message contains three Agent tool calls:]
+
+Agent(
+  cwd=/home/koad/.sibyl/,
+  prompt="You are Sibyl, research entity... [brief] ...commit to research/icm-synthesis.md",
+  run_in_background=true
+)
+
+Agent(
+  cwd=/home/koad/.faber/,
+  prompt="You are Faber, content strategist... [brief] ...commit to content/day-07-brief.md",
+  run_in_background=true
+)
+
+Agent(
+  cwd=/home/koad/.mercury/,
+  prompt="You are Mercury, distribution entity... [brief] ...commit to distribution/checklist.md",
+  run_in_background=true
+)
+```
+
+All three start simultaneously. Each runs in its own context, reads its own startup documents, does its work, and commits. Three separate notifications will arrive as each completes — not all at once, but in whatever order they finish.
+
+**When to proceed after launching:** it depends on what the next decision requires. If the next action needs all three results (e.g., Juno reviews all three outputs before deciding the Week 2 plan), wait for all three notifications before acting. If the next action can be triggered by the first result that arrives (e.g., Juno can begin reviewing Sibyl's research while Faber and Mercury are still working), proceed on the first notification.
+
+**Rate pacing does not apply to parallel invocations.** Pacing applies to sequential chains where one invocation follows another over time. Multiple calls in the same message are launched simultaneously — there is no "between" to pace.
+
+**Practical ceiling:** launching more than six or seven entities simultaneously on the same machine can create resource contention. The koad:io team is small enough (Sibyl, Faber, Mercury, Veritas, Muse, Janus — six maximum concurrent) that this limit is rarely reached in practice.
+
+> **Verification step:** Write a single orchestrating message that launches Sibyl (research task) and Faber (draft task) in parallel. Both should have `run_in_background: true`. Confirm neither brief depends on the other's output. Count: how many notifications will arrive?
 
 ---
 
 ## Atom 3.3: The Notification Pattern — How the Orchestrator Learns Work Is Done
 
-[STUB — Content to be authored]
+When a background Agent tool invocation completes, the orchestrating agent receives a notification. This is the signal that transitions the loop from "waiting" to "observe."
 
-Core content to cover:
-- The Bash tool with `run_in_background: true` notifies the orchestrating agent when the background task completes.
-- The orchestrator does not poll. Does not use sleep loops while waiting. When the notification arrives, the orchestrator reads git log to verify work was done (covered in detail at Level 4).
-- What the notification contains: the background task's output (the entity's conversational response). This output is supplementary — the canonical verification is git log, not parsed output.
-- What to do with the notification:
-  1. Check git log to verify the expected commit is present.
-  2. If the next decision requires reading the entity's output (not just verifying completion), use `tail -20` or `--output-format=json .result` to read it efficiently.
-  3. Decide what happens next.
-- What not to do: wait for all notifications before checking any. Each notification is an opportunity to verify and decide. Check each as it arrives.
+**The orchestrator does not poll.** There is no sleep loop, no periodic `git log` check, no "wait 30 seconds and see if the entity is done." The notification arrives automatically when the entity's session completes. When it arrives, the orchestrator acts.
+
+**What the notification contains:** the entity's final conversational output — whatever the entity said at the end of its session. This output is useful context but it is not the canonical verification. The entity may summarize its work accurately or may describe what it intended to do rather than what it actually committed. The canonical verification is always the git log (covered in depth at Level 4).
+
+**The three-step response to a notification:**
+
+1. Check git log to verify the expected commit is present:
+   ```bash
+   git -C /home/koad/.<entity>/ log --oneline -5
+   ```
+   Look for the commit message specified in the brief's completion signal.
+
+2. If the next decision requires reading the entity's content output (not just confirming it was committed), read efficiently. Use `tail -20` on the committed file or `--output-format=json .result` to read the agent's output without scanning the full conversation.
+
+3. Decide what happens next: launch the next entity, file an issue, update Juno's own state, or report to koad.
+
+**Do not wait for all notifications before acting on any.** Each notification is an independent opportunity to verify and decide. If Sibyl finishes and her research does not depend on Faber's draft, act on Sibyl's notification immediately — even if Faber and Mercury are still running. This keeps the judgment loop responsive rather than batch-processing all results at the end.
+
+> **Verification step:** Describe in order the three actions you take when a background entity notification arrives. Do not reference Level 4's content — just name the three steps from memory and state what the canonical verification is.
 
 ---
 
 ## Atom 3.4: Sequential Chains — When and How to Pace
 
-[STUB — Content to be authored]
+Sequential chained invocations are required when entity B's task genuinely depends on entity A's output. You launch A, wait for the notification, verify the result, and then launch B — with one required step between the verification and the launch.
 
-Core content to cover:
-- Sequential chained calls are required when entity B's task depends on entity A's output. The operator launches A, waits for completion, then launches B.
-- From VESTA-SPEC-054 §5: between sequential entity invocations in a chain, wait 60 seconds. This is the rate pacing rule.
-- Why 60 seconds: chained API calls to the same backing model infrastructure can saturate rate limits. 60 seconds is the validated operational floor. Longer is acceptable; shorter is not.
-- Implementation:
-  ```bash
-  # After entity A's output is received and verified:
-  sleep 60
-  # Then launch entity B
-  ```
-- What "chained" means: A completes, then B starts. Not parallel invocations launched in the same message.
-- What rate pacing is not: it is not polling. It is not "wait 60 seconds and then check if A is done." The 60-second sleep happens after A's notification is received — after A is confirmed complete, before B is launched.
-- The one legitimate use of sleep in entity orchestration. All other sleep usage in orchestration is a code smell (polling, artificial delay, chain scripting).
+**The rate pacing rule (VESTA-SPEC-054 §5):** between sequential entity invocations in a chain, wait 60 seconds.
+
+```bash
+# Entity A's notification arrives. You verify git log. Then:
+sleep 60
+# Now launch entity B
+```
+
+**Why 60 seconds:** chained API calls to the same model infrastructure in quick succession can saturate rate limits, causing the second invocation to fail or produce degraded output. 60 seconds is the validated operational floor — tested against the koad:io team's actual usage patterns. Longer is acceptable. Shorter is not.
+
+**What "between" means precisely:** the 60-second sleep happens after A's notification is received and verified, and before B is launched. It is not a polling interval ("sleep 60, then check if A is done"). A is confirmed done first. Then you sleep. Then you launch B.
+
+```bash
+# Timeline:
+# T=0:    Launch entity A (background)
+# T=varies: A's notification arrives
+# T=verify: Check git log — A's commit is present
+# T=verify+sleep 60: Sleep completes
+# T=verify+60s: Launch entity B
+```
+
+**The only legitimate use of `sleep` in entity orchestration.** Every other sleep usage in an orchestration session is a code smell:
+- `sleep` before checking if an entity is done → polling (wrong; wait for notification)
+- `sleep` as artificial delay between parallel launches → unnecessary (parallel launches need no pacing)
+- `sleep` inside a loop script → loop scripts are an anti-pattern entirely
+
+The 60-second sleep exists only in the sequential chain pattern. If you find yourself writing `sleep` for any other reason, stop and reconsider the design.
+
+> **Verification step:** Draw or describe the timeline for this scenario: you launch Sibyl to research ICM (background), receive her notification, verify her commit, then launch Faber to write a primer based on Sibyl's research. Where in that timeline does the 60-second sleep go?
 
 ---
 
 ## Atom 3.5: Parallel vs. Sequential — Applying the Decision
 
-[STUB — Content to be authored]
+The decision question is always the same: **"Does entity B need to know what entity A found before starting?"**
 
-Core content to cover:
-- The decision question: "Does entity B need to know what entity A found before starting?"
-- Worked examples:
-  - Sibyl researches topic X, Faber drafts content Y (unrelated topic) → parallel. Neither depends on the other.
-  - Sibyl researches topic X, Faber drafts content based on Sibyl's research → sequential with pacing. Faber cannot start until Sibyl's research is available.
-  - Faber drafts Day 7 content, Veritas reviews a different piece of Faber's previous work → parallel. Both work on Faber artifacts, but neither result depends on the other.
-  - Sibyl researches ICM, then Juno decides whether to have Faber write a primer → sequential. Juno (the orchestrator) must observe Sibyl's output before making the decision. Then Faber is launched separately with appropriate pacing.
-- Common mistake to name: treating a "for completeness" sequential chain as if it were a dependency. "I want to review Sibyl's research before starting Faber" is not a dependency — if Faber's task is independent, launch both in parallel and review Sibyl's output when it arrives. The review is for the orchestrator's knowledge, not for Faber's work.
-- Summary rule: parallel unless there is a genuine data dependency. Rate pace all sequential chains.
+If yes: sequential with pacing. If no: parallel.
+
+Work through five concrete scenarios from the koad:io team workflow:
+
+| Scenario | Decision | Rationale |
+|----------|----------|-----------|
+| Sibyl researches topic X; Faber drafts a Day 7 brief (unrelated topic) | **Parallel** | Neither output depends on the other. Both can start simultaneously. |
+| Sibyl researches ICM; Faber writes a primer using Sibyl's synthesis as source | **Sequential + pacing** | Faber cannot start without `research/icm-synthesis.md`. Launch Sibyl, verify commit, sleep 60s, launch Faber with Sibyl's synthesis referenced in the brief. |
+| Faber drafts Day 7 content; Veritas reviews Faber's Day 6 draft (a different artifact) | **Parallel** | Both work on Faber's outputs, but neither depends on the other's result. Independent tasks run simultaneously. |
+| Sibyl researches whether ICM is already documented; Juno decides whether Faber should write a primer | **Sequential** | Juno (the orchestrator) must observe Sibyl's result before making the decision. This is not about Faber's dependency — it is about the orchestrator's judgment step. |
+| Faber drafts Day 7; Mercury prepares a distribution checklist for the same day | **Parallel** | Distribution planning does not require the draft to be complete. They are independent preparations for the same delivery date. |
+
+**The common mistake to name explicitly:** treating the orchestrator's desire to review as a dependency. "I want to review Sibyl's research before starting Faber" is not a data dependency — it is a preference. If Faber's task is genuinely independent of Sibyl's output, launch both in parallel. Review Sibyl's research when her notification arrives. Your review is for your own knowledge; it does not block Faber.
+
+The moment you conflate "I want to see this first" with "Faber needs this to start," you have introduced false sequencing. The rule catches it: "Does Faber need to know what Sibyl found before starting?" Not "does the orchestrator want to read it first."
+
+**Summary:** parallel unless there is a genuine data dependency. Rate pace every sequential chain. Never use sleep for any other purpose.
+
+> **Verification step:** Classify each of these three scenarios as parallel or sequential (with rationale): (1) Sibyl researches koad:io philosophy, Faber updates the BUSINESS_MODEL.md draft. (2) Faber commits a new draft, Veritas reviews that specific draft. (3) Mercury prepares distribution assets, Muse creates UI mockups for the same release.
 
 ---
 

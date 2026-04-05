@@ -5,7 +5,7 @@ curriculum_slug: multi-entity-orchestration
 level: 2
 slug: the-invocation-brief
 title: "The Invocation Brief — Contextualizing a Subagent"
-status: scaffold
+status: authored
 prerequisites:
   curriculum_complete:
     - commands-and-hooks
@@ -32,99 +32,135 @@ After completing this level, the operator will be able to:
 
 ## Atom 2.1: The Four Required Components
 
-[STUB — Content to be authored]
+A complete Agent tool brief has four required components, in this order. VESTA-SPEC-054 §1.2 names all four. Each has a specific job, and missing any one of them degrades the quality of what the entity produces.
 
-Core content to cover:
-- From VESTA-SPEC-054 §1.2, the brief must include:
-  1. **Identity line** — "You are [Entity], [role description] for the koad:io ecosystem." Example: "You are Sibyl, research entity for the koad:io ecosystem."
-  2. **Task** — one to three sentences describing the specific work. What to produce, where to put it, what scope to cover.
-  3. **Relevant cross-entity context** the entity cannot derive from its own repo (if any). For example: if Faber needs to know that Mercury's platform credentials are not yet configured, that information is not in Faber's repo. The brief supplies it.
-  4. **Completion signal** — what to commit or output when done. Example: "When complete, commit your synthesis to `research/icm.md` with the message 'research: ICM pattern synthesis'."
-- Why the identity line comes first: it orients the subagent before it reads its own context. The subagent's startup sequence reads CLAUDE.md and PRIMER.md — but it reads those after the prompt arrives. The identity line ensures the subagent knows its role from the very first line of the brief.
-- Why the completion signal comes last: the subagent needs to hold the output format in mind while doing the work. A brief that describes a task but does not say what the deliverable looks like produces exploratory work rather than committed output.
+**1. Identity line.** Opens with: "You are [Entity], [role] for the koad:io ecosystem." Example: "You are Sibyl, research entity for the koad:io ecosystem." The identity line comes first because the subagent's `CLAUDE.md` and `PRIMER.md` are loaded at session start — but they are loaded before the brief is processed in the agent's live context. The identity line ensures the subagent has role orientation from the very first line of the brief, before reading anything else.
+
+**2. Task.** One to three sentences: what to produce, where to put it, what scope applies. Example: "Research the pre-invocation context assembly pattern from the Vesta spec registry and write a synthesis covering the key insight, invocation shape, and relationship to PRIMER.md. Put the result in `research/icm-synthesis.md`." The task tells the entity what success looks like. Atom 2.3 covers how to write it well.
+
+**3. Cross-entity context** the entity cannot derive from its own repo. If Faber needs to know that Mercury's platform credentials are not yet configured (so Faber should not draft distribution steps), that information is not in Faber's `PRIMER.md`. It belongs in the brief. If there is no such context — all the relevant state is in the entity's own repo — this component can be omitted. It is only required when it is needed.
+
+**4. Completion signal.** What to commit or output when done. Example: "When complete, commit your synthesis to `research/icm-synthesis.md` with the commit message 'research: ICM pattern synthesis'." The completion signal comes last because the entity needs to hold the expected output format in mind throughout the work. A brief without a completion signal produces exploratory output — the entity does excellent work and then has no specification for where to put it or how to mark it done.
+
+> **Verification step:** Look at the invocation brief in Atom 2.5 (the "good brief" example). Point to each of the four components by name. Confirm all four are present and state what each one is doing in that specific brief.
 
 ---
 
 ## Atom 2.2: What the Entity Already Knows — The PRIMER.md Relationship
 
-[STUB — Content to be authored]
+Every entity in the koad:io ecosystem reads its own `CLAUDE.md` and `PRIMER.md` at session start. These documents contain the entity's identity, specialization, current project state, git workflow, and awareness of the broader team. By the time the Agent tool's `prompt` parameter arrives, the entity already knows a great deal.
 
-Core content to cover:
-- Every entity reads its own `CLAUDE.md` and `PRIMER.md` at session start. These documents contain the entity's identity, current state, capabilities, and relevant context.
-- The brief supplements, not replaces, this context. The orchestrator does not need to explain who the entity is, what its tools are, or what its git workflow is — the entity's own startup documents cover this.
-- What to include in the brief: context that is not in the entity's repo. If the entity's task requires knowledge of another entity's current state (e.g., "Vulcan just committed these three files — review them"), that context belongs in the brief.
-- What to omit from the brief: the entity's own identity, tool access, standard workflow, and anything that is already in its PRIMER.md or CLAUDE.md.
-- Practical test: before adding a sentence to a brief, ask "would the entity know this by reading its own startup documents?" If yes, omit it. If no, include it.
-- Over-briefing (including content the entity already has) is not dangerous but it wastes context budget and can confuse the entity by contradicting its own self-knowledge.
+**The brief supplements this self-knowledge — it does not replace it.** The orchestrator does not need to explain who Sibyl is, what her research workflow is, what tools she has access to, or what her commit conventions are. Sibyl's `CLAUDE.md` covers all of this. Including it in the brief wastes context budget and risks contradicting the entity's own startup documentation.
+
+**What to include in the brief:** context that exists outside the entity's own repo. If Faber needs to know that Vulcan just merged a specific commit (`7d95c39`) to the main site, and that information is not in Faber's `PRIMER.md`, the brief must supply it. If Sibyl needs to know that a particular line of research was already completed by a previous session (and that information lives in another entity's logs), the brief must supply it.
+
+**What to omit from the brief:** the entity's own identity, its standard tools, its git workflow, its awareness of the team structure, and any context that is already in its own repo. Run `ls /home/koad/.<entity>/` and `cat /home/koad/.<entity>/PRIMER.md` before writing a brief — this tells you what the entity already has.
+
+**Practical test:** before adding any sentence to a brief, ask "would this entity know this by reading its own startup documents?" If yes, omit it. If no, include it.
+
+Over-briefing — including content the entity already has — is not catastrophic, but it wastes context window budget and can introduce confusion if the brief's version of a fact differs from the entity's own `PRIMER.md`. When in doubt, leave it out: the entity's self-knowledge is reliable.
+
+> **Verification step:** Run `cat /home/koad/.faber/PRIMER.md` (or open it with Read). List three facts about Faber that are already there. These are facts you do not need to include in any brief you write for Faber.
 
 ---
 
 ## Atom 2.3: Writing the Task — One to Three Sentences
 
-[STUB — Content to be authored]
+The task component of the brief is the orchestrator's most important writing job. It tells the entity what to produce, where to put it, and what constraints apply. It does not tell the entity how to do the work.
 
-Core content to cover:
-- The task description should be one to three sentences. Longer is not better — a long task description suggests the operator is either over-specifying (telling the entity how to do its job) or combining multiple tasks into one brief (which should be two separate invocations).
-- What a good task description contains: what to produce, where to put it, and what scope or constraints apply.
-- What a good task description omits: how to produce it. The entity has judgment. If you tell it how, you are removing the benefit of delegation.
-- Examples:
-  - Good: "Research the pre-invocation context assembly pattern (ICM) from the Vesta spec registry. Write a synthesis covering the key insight, the invocation shape, and the relationship to PRIMER.md. Put your result in `research/icm-synthesis.md`."
-  - Too vague: "Research ICM." (No deliverable, no scope, no location.)
-  - Over-specified: "Research ICM. First, read VESTA-SPEC-054. Then read related specs. Then write a summary with five bullet points, organized as: definition, rationale, mechanism, example, limitations." (You are telling Sibyl how to be Sibyl.)
-- When a task feels too long to summarize in three sentences, it is probably two tasks. Split the brief into two invocations.
+**Target length: one to three sentences.** This is not an arbitrary style preference — it is a smell detector. A task description longer than three sentences usually means one of two things: the orchestrator is over-specifying (directing the entity's process, not its outcome), or the orchestrator is combining multiple tasks into one brief (which should be two separate invocations with two separate notifications).
+
+**What a good task description includes:**
+- What to produce: a synthesis, a draft, a review comment, a list of blockers
+- Where to put it: a specific file path in the entity's repo
+- Scope or constraints: topic limits, audience, length, tone, what to exclude
+
+**What a good task description omits:** how to produce it. The entity has judgment. Sibyl knows how to do research; you do not need to tell her which files to read first. Faber knows how to draft content; you do not need to specify the outline structure. If you tell the entity how to do its job, you have removed the benefit of delegation — you might as well do it yourself.
+
+Three examples at different quality levels:
+
+| Quality | Example |
+|---------|---------|
+| Good | "Research the pre-invocation context assembly pattern (ICM) from the Vesta spec registry. Write a synthesis covering the key insight, invocation shape, and relationship to PRIMER.md. Put the result in `research/icm-synthesis.md`." |
+| Too vague | "Research ICM." — No deliverable, no scope, no output location. |
+| Over-specified | "Research ICM. First read VESTA-SPEC-054. Then read related specs. Then write five bullet points covering definition, rationale, mechanism, example, and limitations." — You are directing Sibyl's process, not her outcome. |
+
+**When a task is too large for three sentences:** it is probably two tasks. Split into two invocations with two completion signals. Each invocation returns a notification. The orchestrator observes the first result before launching the second — which is the correct sequential pattern.
+
+> **Verification step:** Write a task description (one to three sentences) for this goal: have Veritas review Faber's latest committed draft and identify any factual claims that need citation. Check your task description contains: what to produce, where to put the review, and what scope applies. Confirm it does not specify how Veritas should do the review.
 
 ---
 
 ## Atom 2.4: The Completion Signal — What to Commit
 
-[STUB — Content to be authored]
+The completion signal is the last component of the brief and the one most often missing from insufficient briefs. It tells the entity what to do when its work is done: commit a specific file to a specific path with a specific commit message prefix.
 
-Core content to cover:
-- The completion signal tells the entity what to do when its work is done: commit a specific file, write to a specific path, produce a specific output format.
-- Why it is required: without a completion signal, the entity may do excellent work and then... not commit it. Or commit it to a surprising path. The git log check (Level 4) verifies against the completion signal — if the expected commit is not there, the work is not done.
-- Standard form: "When complete, commit your result to `<path>` with the message `<commit message>`."
-- More specific form: "Commit `<filename>` with the prefix 'research:' in the commit message so it is distinguishable in git log."
-- What happens without a completion signal: the entity operates in its own judgment about what to commit. This is not always wrong — entities have their own commit hygiene. But the orchestrator cannot reliably verify completion via git log without knowing what to look for.
-- The completion signal is also a quality gate. An entity that has committed its result has decided the work is done. A committed file is a signal from the entity that it stands behind the output.
+**Why it is required:** without a completion signal, the entity may produce excellent work and then not commit it — or commit it to a path the orchestrator did not expect. The git log verification check (Level 4) verifies against what the completion signal specified. If the orchestrator does not know what to look for in git log, they cannot confirm the work is done.
+
+**Standard form:**
+```
+When complete, commit your result to `research/icm-synthesis.md` with the commit message 'research: ICM pattern synthesis'.
+```
+
+**More specific form with a prefix constraint:**
+```
+Commit `content/day-07-brief.md` with a commit message starting with 'content:' so it is distinguishable in git log.
+```
+
+The prefix constraint lets the orchestrator use a quick `git log --oneline | grep "^content:"` to find the commit without scanning the full log.
+
+**What happens without a completion signal:** the entity exercises its own judgment about what to commit and where. Entities have their own commit hygiene — Sibyl knows to commit research files, Faber knows to commit content drafts. But the orchestrator cannot predict the exact path or message. If the orchestrator checks `git log` for `research/icm.md` and Sibyl committed `research/icm-synthesis.md` instead, the check fails — not because the work was not done, but because the orchestrator did not specify the expected path.
+
+**The completion signal as a quality gate:** an entity that has committed its result has decided the work is complete and it stands behind the output. A commit is not a draft — it is a declaration. The completion signal makes this gate explicit.
+
+> **Verification step:** Write a completion signal for this task: have Faber produce a Day 8 content brief. Include a specific file path, a commit message, and a prefix that will make it easy to find in git log. The signal should be one to two sentences.
 
 ---
 
 ## Atom 2.5: Reading a Brief — Two Examples (Good and Insufficient)
 
-[STUB — Content to be authored]
+The fastest way to internalize brief quality is to read two examples side by side and diagnose the difference. Both are for the same task: Faber drafts the Day 7 content brief.
 
-Core content to cover:
-- Walk through two complete brief examples side by side.
-- **Good brief (Faber, content draft task):**
-  ```
-  You are Faber, content strategist for the koad:io ecosystem.
-  
-  Draft the Day 7 content brief for the "Reality Pillar" series. The theme is
-  the $200 laptop experiment — seven days of operation on commodity hardware
-  proving that sovereignty doesn't require expensive infrastructure. The audience
-  is technical operators who have followed Day 1–6 posts. Target length: 600–800
-  words. Tone: grounded, specific, not triumphalist.
-  
-  Note: Mercury's platform credentials are not yet configured — do not include
-  distribution steps in this draft. Faber owns production; Mercury handles
-  distribution when credentials are live.
-  
-  When complete, commit your draft to `content/day-07-brief.md` with the commit
-  message 'content: Day 7 brief — $200 laptop experiment'.
-  ```
-  - Identity line: present
-  - Task: clear scope, deliverable format, length, tone
-  - Cross-entity context: Mercury credential status (not in Faber's repo)
-  - Completion signal: specific path, specific commit message
+**Good brief:**
 
-- **Insufficient brief:**
-  ```
-  Write the Day 7 content brief.
-  ```
-  - No identity line. No scope. No length or tone. No cross-entity context. No completion signal.
-  - The entity will do something. It may be good. But the orchestrator cannot predict the path, verify the commit, or know what the entity did with the Mercury constraint.
+```
+You are Faber, content strategist for the koad:io ecosystem.
 
-- Have the operator evaluate the insufficient brief component by component and state what is missing from each.
+Draft the Day 7 content brief for the "Reality Pillar" series. The theme is
+the $200 laptop experiment — seven days of operation on commodity hardware
+proving that sovereignty does not require expensive infrastructure. The audience
+is technical operators who have followed Day 1–6 posts. Target length: 600–800
+words. Tone: grounded, specific, not triumphalist.
+
+Note: Mercury's platform credentials are not yet configured — do not include
+distribution steps in this draft. Faber owns production; Mercury handles
+distribution when credentials are live.
+
+When complete, commit your draft to `content/day-07-brief.md` with the commit
+message 'content: Day 7 brief — $200 laptop experiment'.
+```
+
+Component audit:
+- **Identity line:** "You are Faber, content strategist for the koad:io ecosystem." — present
+- **Task:** series name, theme, audience, length, tone — specific and constrained to Faber's judgment on how to write it
+- **Cross-entity context:** Mercury's credential status — not in Faber's repo; must come from the orchestrator
+- **Completion signal:** specific path (`content/day-07-brief.md`), specific commit message with a greppable prefix — present
+
+**Insufficient brief:**
+
+```
+Write the Day 7 content brief.
+```
+
+Component audit:
+- **Identity line:** absent — Faber will use her startup self-knowledge, but the brief does not orient her
+- **Task:** no series name, no theme, no audience, no length, no tone — Faber will make choices the orchestrator cannot predict
+- **Cross-entity context:** absent — Faber does not know Mercury's credential status; she may draft distribution steps that cannot be executed
+- **Completion signal:** absent — Faber will commit to whatever path she judges appropriate; the orchestrator has no way to verify via git log
+
+The entity will do *something* when given the insufficient brief. It may even be good. But the orchestrator cannot predict the path, cannot verify the commit, and does not know whether Faber accounted for the Mercury constraint. The brief is the orchestrator's control surface — an insufficient brief cedes that control.
+
+> **Verification step:** Take the insufficient brief above and rewrite it into a complete four-component brief. Check your version against the component audit: identity line, task with scope and constraints, cross-entity context (is any needed?), completion signal with path and commit message.
 
 ---
 
