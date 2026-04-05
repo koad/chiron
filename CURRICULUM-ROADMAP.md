@@ -120,6 +120,22 @@ The chain is linear through the core four. `multi-entity-orchestration` is now s
 
 ---
 
+### The Orchestrator Path
+**Who:** Someone who has completed the Builder Path and wants to coordinate teams of entities — delegating work, reading distributed output, and making judgment-driven decisions about what happens next.
+
+**Goal:** Run the koad:io team in coordinated multi-entity orchestration sessions. Delegate tasks with proper context briefs, verify completion via git log, classify work correctly as Agent tool or GitHub Issues, avoid the five orchestration anti-patterns, and maintain the launch-observe-decide judgment loop under real conditions.
+
+**Curriculum sequence:**
+1. Full Builder Path (20.1 h) — prerequisite chain
+2. `multi-entity-orchestration` (3.0 h) — Agent tool invocation, parallel execution, git log verification, GitHub Issues boundary, judgment loop, anti-patterns
+
+**Total:** ~23.1 h across Builder Path + Orchestrator step  
+**Exit point:** The Orchestrator can coordinate any subset of the koad:io team, delegate tasks correctly, verify results without output parsing, and make informed decisions about what happens next without pre-scripting chains.
+
+**Notes:** Orchestrator Path is scaffolded (v0.1.0, 2026-04-05). `multi-entity-orchestration` 7 levels built as stubs — full atom authoring pending. This is the first curriculum in a new track; `content-pipeline-operations` is the anticipated next step when the full team (Veritas, Muse, Mercury, Sibyl) is gestated and operational.
+
+---
+
 ## 4. Gap Analysis
 
 The Vesta spec registry contains 53 specs across 11 protocol areas. The current curriculum covers the following areas with meaningful depth:
@@ -193,15 +209,16 @@ Based on gap analysis weighted by: (a) how many operators are blocked without it
 
 ---
 
-### Candidate 3: `multi-entity-orchestration`
+### Candidate 3: `multi-entity-orchestration` — SCAFFOLDED v0.1.0 — 2026-04-05
+**Status:** Scaffolded (v0.1.0). 7 levels, 35 atoms estimated. Atom stubs in place; full authoring pending.  
 **Working title:** Multi-Entity Orchestration — Running the Team  
-**Scope:** Covers the patterns for running multiple entities in coordination: the Agent tool invocation pattern, spawn-without-window for coordinated work, reading distributed output (tail vs --output-format=json), background runners, chain sleeps pattern, and the orchestration style principle (invoke one entity at a time, observe, decide). Covers the GitHub Issues communication protocol at team scale: how Juno delegates to Vulcan, how entities report back, cross-repo issue references. Covers the entity team workflow (Juno → Vulcan → Veritas → Muse → Mercury → Sibyl → Juno) and what it looks like in practice.
+**Scope:** Covers the Agent tool as the standard entity invocation mechanism, background execution (`run_in_background: true`), parallel vs. sequential delegation with rate pacing (60s between sequential chains), git log as verification primitive, the launch-observe-decide judgment loop, GitHub Issues vs. Agent tool scope boundaries, the Vulcan exception, the judgment test ("judgment or just files?"), and all five orchestration anti-patterns from VESTA-SPEC-054 §9. Establishes the Orchestrator Path as a new learning track following the Builder Path.
 
 **Why third:** The existing entity-operations curriculum covers single-entity operation. The real koad:io operation mode is multi-entity. Operators who run the team without this curriculum will default to pre-scripting chains (which breaks the orchestration principle) or will run entities sequentially without understanding output reading patterns.
 
-**Prerequisite:** `entity-operations`  
-**Estimated size:** 6 levels, 30 atoms, ~3 hours  
-**Covers:** SPEC-008-COMMS, SPEC-008-SPAWN (team coordination patterns), no new Vesta specs but applies many existing ones at team scale
+**Prerequisite:** `commands-and-hooks` (full Builder Path required — see DECISIONS.md §1 for rationale)  
+**Final size:** 7 levels, 35 atoms, ~3.0 hours (expanded from 6/30 estimate — dedicated brief-authoring level added)  
+**Covers:** VESTA-SPEC-054 fully; VESTA-SPEC-053, VESTA-SPEC-051, VESTA-SPEC-020, VESTA-SPEC-012, VESTA-SPEC-038 by reference
 
 ---
 
@@ -226,9 +243,9 @@ Based on gap analysis weighted by: (a) how many operators are blocked without it
 
 *Note: 4 unnumbered specs in the registry are excluded from the count as they are implementation-layer specs (graduation certificate protocol, containment abort, external entity onboarding, entity startup spec) whose contents are embedded in existing curricula as context rather than taught as standalone topics.
 
-**Current curriculum covers approximately 43% of the canonical Vesta spec surface.**
+**Current curriculum covers approximately 46% of the canonical Vesta spec surface** (updated from 43% following addition of `multi-entity-orchestration` scaffold covering VESTA-SPEC-054 and related specs).
 
-The strongest coverage is in trust bonds (64%) — `advanced-trust-bonds` was authored with direct reference to the live bond files and multiple specs. The largest uncovered areas are gestation (0%), package layer (0%), and template substitution (0%), all of which are Builder Path topics. Adding the three next candidates (`entity-gestation`, `commands-and-hooks`, `multi-entity-orchestration`) would bring total coverage to an estimated **62–65%**, with the remaining gap concentrated in kingdoms/FUSE (SPEC-029/030/031), stage-and-submit (SPEC-037), sovereign device onboarding (SPEC-019), and the contextual intelligence layer (SPEC-036) — all of which are appropriate for a second expansion wave.
+The strongest coverage is in trust bonds (64%) — `advanced-trust-bonds` was authored with direct reference to the live bond files and multiple specs. The largest uncovered areas are gestation (0%), package layer (0%), and template substitution (0%), all of which are Builder Path topics. The three next candidates (`entity-gestation`, `commands-and-hooks`, `multi-entity-orchestration`) have all been scaffolded or authored — full delivery of these would bring total coverage to an estimated **62–65%**, with the remaining gap concentrated in kingdoms/FUSE (SPEC-029/030/031), stage-and-submit (SPEC-037), sovereign device onboarding (SPEC-019), and the contextual intelligence layer (SPEC-036) — all of which are appropriate for a second expansion wave.
 
 ---
 
@@ -240,18 +257,20 @@ alice-onboarding (no prereqs)
         ├─→ advanced-trust-bonds
         │     └─→ daemon-operations
         │           └─→ [future: kingdoms-operations]
-        ├─→ multi-entity-orchestration        ← Candidate 3
-        └─→ entity-gestation                  ← Candidate 1
-              └─→ commands-and-hooks          ← Candidate 2
-                    └─→ [future: content-pipeline-operations]
+        ├─→ multi-entity-orchestration        ← v0.1.0 scaffolded 2026-04-05
+        │     (prerequisite: commands-and-hooks, not entity-operations alone)
+        │     └─→ [future: content-pipeline-operations]
+        └─→ entity-gestation                  ← v1.0.0 authored
+              └─→ commands-and-hooks          ← v1.0.0 authored
+                    └─→ multi-entity-orchestration (as above)
                     └─→ [future: package-layer]
 ```
 
 The Learner Path runs left-column only (alice-onboarding → entity-operations).  
 The Operator Path runs the full vertical chain (all four current curricula).  
 The Builder Path runs entity-operations → entity-gestation → commands-and-hooks.  
-Multi-entity orchestration sits at the same prerequisite level as entity-gestation — both branch off entity-operations and do not require each other.
-```
+The Orchestrator Path runs the full Builder Path → multi-entity-orchestration.  
+Note: multi-entity-orchestration requires commands-and-hooks (full Builder Path), not entity-operations alone — see DECISIONS.md §1 for the rationale.
 
 ---
 
