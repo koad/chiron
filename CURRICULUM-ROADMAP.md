@@ -24,11 +24,11 @@ This document maps what the koad:io curriculum covers, how it chains, what paths
 | `advanced-trust-bonds` | Advanced Trust Bonds — Cryptographic Authorization in Practice | in-progress | 10 | 48 | 4.6 h | 0.3.0 |
 | `daemon-operations` | Daemon Operations — The Kingdom Hub in Practice | in-progress | 7 | 35 | 3.5 h | 1.0.0 |
 | `entity-gestation` | Entity Gestation — Creating Sovereign AI Entities from Scratch | in-progress | 8 | 44+ | 4.0 h | 1.0.0 |
-| `commands-and-hooks` | Commands and Hooks — Teaching an Entity to Act | scaffold | 8 | 40 | 3.5 h | 0.1.0 |
+| `commands-and-hooks` | Commands and Hooks — Teaching an Entity to Act | in-progress | 8 | 40 | 3.5 h | 1.0.0 |
 
 **Totals:** 6 curricula · 54 levels · 265+ atoms · ~23.6 estimated hours of delivery
 
-**Authoring status:** `commands-and-hooks` is in `scaffold` state — 8 level files created with atom stubs; atoms pending full authoring. All other curricula are fully authored at the atom level. `entity-operations`, `advanced-trust-bonds`, `daemon-operations`, `entity-gestation`, and `commands-and-hooks` are marked `in-progress` pending Alice delivery; `alice-onboarding` is `active` (delivered, feedback loop open).
+**Authoring status:** All 6 curricula are fully authored at the atom level. `entity-operations`, `advanced-trust-bonds`, `daemon-operations`, `entity-gestation`, and `commands-and-hooks` are marked `in-progress` pending Alice delivery; `alice-onboarding` is `active` (delivered, feedback loop open). `commands-and-hooks` reached v1.0.0 on 2026-04-05 — Levels 0–3 authored in commit `35dacaa`, Levels 4–7 authored in commit `5521c38`.
 
 ---
 
@@ -110,13 +110,12 @@ The chain is linear through the core four. There are no parallel tracks at prese
 2. `entity-operations` (3.5 h) — operational fluency (required substrate)
 3. `advanced-trust-bonds` (4.6 h) — authorization design (critical for entity scope)
 4. `entity-gestation` (4.0 h) — creating entities: the gestation protocol, template substitution, naming, key generation, .env design, trust bond creation, hook architecture (v1.0.0 complete 2026-04-05)
-5. `commands-and-hooks` (3.5 h) — teaching an entity to act: commands system, hook architecture, VESTA-SPEC-006 and VESTA-SPEC-020 in practice (scaffold v0.1.0 — 2026-04-05)
+5. `commands-and-hooks` (3.5 h) — teaching an entity to act: commands system, hook architecture, VESTA-SPEC-006 and VESTA-SPEC-020 in practice (v1.0.0 — delivery-ready 2026-04-05)
 
-**Total (current):** ~20.1 h across steps 1–5 (scaffold — atoms pending authoring)  
-**Total (fully authored):** ~20.1 h  
+**Total:** ~20.1 h across steps 1–5  
 **Exit point:** The Builder can gestate a new entity, design its authorization scope, author its commands and hooks, register it with the daemon, and ship it as a deployable product.
 
-**Notes:** The Builder Path is now 5/5 in scaffold. Steps 1–4 are delivery-ready. Step 5 (`commands-and-hooks`) is scaffolded as of 2026-04-05 — level structure and atom stubs complete, full atom authoring is the next step. An operator following this path today can complete steps 1–4 and enter the `commands-and-hooks` scaffold as Chiron authors it level by level.
+**Notes:** The Builder Path is 5/5 delivery-ready. All 5 steps are fully authored. `commands-and-hooks` reached v1.0.0 on 2026-04-05 — full atom content authored across all 8 levels (Levels 0–3 in commit `35dacaa`, Levels 4–7 in commit `5521c38`).
 
 ---
 
@@ -180,8 +179,8 @@ Based on gap analysis weighted by: (a) how many operators are blocked without it
 
 ---
 
-### Candidate 2: `commands-and-hooks` — SCAFFOLDED 2026-04-05
-**Status:** Scaffold complete (v0.1.0). 8 levels, 40 atom stubs. Atoms pending full authoring.  
+### Candidate 2: `commands-and-hooks` — AUTHORED v1.0.0 — 2026-04-05
+**Status:** Fully authored (v1.0.0). 8 levels, 40 atoms. Delivery-ready.  
 **Working title:** Commands and Hooks — Teaching an Entity to Act  
 **Scope:** Covers the commands system (VESTA-SPEC-006): discovery order, resolution algorithm, authoring a command, subcommand patterns, global vs entity-local scope. Covers the hook architecture (VESTA-SPEC-020): the executed-without-arguments hook, invocation contract, non-interactive path, local-first PID lock, base64 encoding for multiline content, and the powerbox verification pattern for signed hooks. Ends with the operator having authored at least one command and one hook in a live entity directory.
 
