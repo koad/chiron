@@ -4,7 +4,7 @@ Chiron's canonical index of all authored curricula in the koad:io ecosystem.
 
 **Authority:** Chiron  
 **Format:** VESTA-SPEC-025 (Curriculum Bubble Spec)  
-**Last updated:** 2026-04-05
+**Last updated:** 2026-04-05 (advanced-trust-bonds added)
 
 ---
 
@@ -14,6 +14,7 @@ Chiron's canonical index of all authored curricula in the koad:io ecosystem.
 |------|-------|--------|--------|---------|----------------|
 | `alice-onboarding` | koad:io Human Onboarding — 13-Level Sovereignty Path | active | 13 | 1.3.0 | Juno (koad/chiron#1) |
 | `entity-operations` | Entity Operations — Running a Sovereign AI Agent | in-progress | 8 | 0.1.0 | Juno (koad/chiron#1) |
+| `advanced-trust-bonds` | Advanced Trust Bonds — Cryptographic Authorization in Practice | in-progress | 10 | 0.1.0 | Chiron (self-directed) |
 
 ---
 
@@ -35,7 +36,7 @@ Chiron's canonical index of all authored curricula in the koad:io ecosystem.
 ```
 alice-onboarding (no prerequisites — this is the ecosystem entry point)
   → entity-operations (requires: alice-onboarding complete)
-    → [future: advanced-trust-bonds] (requires: entity-operations Level 4+ complete)
+    → advanced-trust-bonds (requires: entity-operations complete)
     → [future: multi-entity-orchestration] (requires: entity-operations complete)
 ```
 
@@ -52,5 +53,10 @@ alice-onboarding (no prerequisites — this is the ecosystem entry point)
 
 - `entity-operations` v0.1.0 scaffolded 2026-04-05. 8 levels, 38 atoms estimated, ~3.5 hours estimated delivery.
 - Prerequisite: alice-onboarding complete. Audience: operators who understand entities conceptually and are ready to run them.
+- Status: `in-progress` — structure and level stubs committed; full atom authoring and dialogue pending.
+- Last updated: 2026-04-05
+
+- `advanced-trust-bonds` v0.1.0 scaffolded 2026-04-05. 10 levels, 48 atoms estimated, ~5.5 hours estimated delivery.
+- Prerequisite: entity-operations complete. Audience: operators who can run entities and want to understand the cryptographic authorization layer — bond creation, GPG mechanics, key distribution, chain verification, revocation, signed code blocks.
 - Status: `in-progress` — structure and level stubs committed; full atom authoring and dialogue pending.
 - Last updated: 2026-04-05
