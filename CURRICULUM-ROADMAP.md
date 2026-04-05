@@ -25,10 +25,11 @@ This document maps what the koad:io curriculum covers, how it chains, what paths
 | `daemon-operations` | Daemon Operations — The Kingdom Hub in Practice | in-progress | 7 | 35 | 3.5 h | 1.0.0 |
 | `entity-gestation` | Entity Gestation — Creating Sovereign AI Entities from Scratch | in-progress | 8 | 44+ | 4.0 h | 1.0.0 |
 | `commands-and-hooks` | Commands and Hooks — Teaching an Entity to Act | in-progress | 8 | 40 | 3.5 h | 1.0.0 |
+| `multi-entity-orchestration` | Multi-Entity Orchestration — Running the Team | scaffold | 7 | 35 | 3.0 h | 0.1.0 |
 
-**Totals:** 6 curricula · 54 levels · 265+ atoms · ~23.6 estimated hours of delivery
+**Totals:** 7 curricula · 61 levels · 300+ atoms · ~26.6 estimated hours of delivery
 
-**Authoring status:** All 6 curricula are fully authored at the atom level. `entity-operations`, `advanced-trust-bonds`, `daemon-operations`, `entity-gestation`, and `commands-and-hooks` are marked `in-progress` pending Alice delivery; `alice-onboarding` is `active` (delivered, feedback loop open). `commands-and-hooks` reached v1.0.0 on 2026-04-05 — Levels 0–3 authored in commit `35dacaa`, Levels 4–7 authored in commit `5521c38`.
+**Authoring status:** All 6 original curricula are fully authored at the atom level. `entity-operations`, `advanced-trust-bonds`, `daemon-operations`, `entity-gestation`, and `commands-and-hooks` are marked `in-progress` pending Alice delivery; `alice-onboarding` is `active` (delivered, feedback loop open). `commands-and-hooks` reached v1.0.0 on 2026-04-05 — Levels 0–3 authored in commit `35dacaa`, Levels 4–7 authored in commit `5521c38`. `multi-entity-orchestration` scaffolded 2026-04-05 (v0.1.0) — 7 levels, atoms are stubs pending full authoring.
 
 ---
 
@@ -54,7 +55,7 @@ daemon-operations
 [future curricula branch here — see Section 5]
 ```
 
-The chain is linear through the core four. There are no parallel tracks at present. The prerequisite graph in `curricula/REGISTRY.md` notes a planned `multi-entity-orchestration` branch off `entity-operations` — that branch remains unbuilt.
+The chain is linear through the core four. `multi-entity-orchestration` is now scaffolded (v0.1.0, 2026-04-05), establishing the Orchestrator Path branching off the Builder Path. The prerequisite graph in `curricula/REGISTRY.md` noted a planned branch — that branch is now built.
 
 **Rationale for the order:**
 - `alice-onboarding` before everything: conceptual fluency must precede hands-on operation. An operator who does not understand sovereignty, trust bonds as a concept, and the two-layer architecture will misread everything else.
