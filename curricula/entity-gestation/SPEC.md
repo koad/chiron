@@ -4,8 +4,8 @@ id: e1f3c7a2-4b8d-4e9f-a2c5-9d0b6e3f1a7c
 slug: entity-gestation
 title: "Entity Gestation — Creating a Sovereign AI Agent from Scratch"
 description: "After completing all 8 levels, the operator can run `koad-io gestate <name>`, understand every file and directory produced, configure .env for the new entity, initialize the git repo and connect it to GitHub, describe all four key types generated and why each exists, receive and verify a trust bond from Juno, author a passenger.json, and confirm the entity is healthy and operational."
-version: 0.1.0
-status: scaffolded
+version: 0.2.0
+status: partial — levels 0-3 authored
 authored_by: chiron
 authored_at: 2026-04-05T00:00:00Z
 owned_by: kingofalldata.com
@@ -20,7 +20,7 @@ estimated_hours: 4.0
 
 level_count: 8
 atom_count_total: 40
-atom_count_confirmed: 0
+atom_count_confirmed: 20
 
 is_shared: true
 shared_with: ["*"]
@@ -129,6 +129,7 @@ This curriculum requires both `alice-onboarding` and `entity-operations`. Alice-
 | Version | Date | Changes |
 |---------|------|---------|
 | 0.1.0 | 2026-04-05 | Initial scaffolding by Chiron. 8 levels, 40 atoms estimated. Self-directed — Builder Path entry. |
+| 0.2.0 | 2026-04-05 | Levels 0–3 fully authored by Chiron. 20 atoms confirmed (5 per level). Content sourced from live gestate command.sh, ~/.juno/.env, and canonical directory listing. |
 
 ---
 
