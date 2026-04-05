@@ -4,7 +4,7 @@ id: a9f3c2e1-7b4d-4e8a-b5f6-2d1c9e0a3f7b
 slug: alice-onboarding
 title: "koad:io Human Onboarding — 12-Level Sovereignty Path"
 description: "After completing all 12 levels, the learner understands sovereign infrastructure, can navigate an entity directory, articulates why trust bonds matter, and has made a cryptographically signed commitment to operating with sovereignty."
-version: 1.2.0
+version: 1.3.0
 authored_by: chiron
 authored_at: 2026-04-04T12:00:00Z
 owned_by: kingofalldata.com
@@ -13,10 +13,10 @@ signature: (pending — signed by Chiron on first authoring commit)
 prerequisites: []
 
 audience: "Humans new to the koad:io ecosystem. Basic CLI familiarity assumed (can open a terminal, run a command, understand what a directory is). No prior knowledge of sovereign infrastructure, trust bonds, or entity architecture required."
-estimated_hours: 4
+estimated_hours: 4.5
 
 level_count: 13
-atom_count_total: 57
+atom_count_total: 60
 
 is_shared: true
 shared_with: ["*"]
@@ -77,8 +77,8 @@ After completing all 12 levels, the learner will be able to:
 | 0 | The First File | 3 | 10 |
 | 1 | First Contact — What Is This? | 4 | 15 |
 | 2 | What Is an Entity? | 5 | 20 |
-| 3 | Your Keys Are You | 4 | 20 |
-| 4 | How Entities Trust Each Other | 5 | 25 |
+| 3 | Your Keys Are You | 5 | 20 |
+| 4 | How Entities Trust Each Other | 7 | 35 |
 | 5 | Commands and Hooks — How Entities Take Action | 4 | 20 |
 | 6 | The Daemon and the Kingdom | 5 | 25 |
 | 7 | Peer Rings — Connecting Kingdoms | 4 | 20 |
@@ -99,6 +99,7 @@ Full level content lives in `levels/`. See VESTA-SPEC-025 for the loading contra
 | 1.0.0 | 2026-04-04 | Initial authoring by Chiron. 12 levels, 54 atoms total. |
 | 1.1.0 | 2026-04-04 | Revisions in response to Alice's review (APPROVE WITH NOTES). Level 3: added wax-seal signing analogy to delivery notes. Level 6: added kingdom-awareness exit criterion and second assessment question. Level 8: reordered atoms — pipeline first (8.1), then entity roster (8.2). Level 9 Atom 9.4: reframed as pattern-first (event bridge), GitClaw named as one implementation. Level 11: added delivery note for PWA sovereignty tension. |
 | 1.2.0 | 2026-04-05 | Added Level 0: The First File. Zero-threshold entry point — PRIMER.md in any folder. 3 atoms, 10 minutes. No terminal or installation required. Addresses koad/chiron#3 (Iris recommendation). Entry prerequisites updated to reflect lower floor. Total: 13 levels, 57 atoms. |
+| 1.3.0 | 2026-04-05 | Operational verification gap closed (Day 6 reflection). Level 3: added Atom 3.5 (GPG key import mechanics — fetch issuer key from canon, import into local keyring). Level 4: added Atom 4.6 (real bond file format — clearsign structure) and Atom 4.7 (operational verification — four-step gpg --verify sequence with output interpretation). Level 4 exit criteria updated to require hands-on verification, not just conceptual fluency. Level 4 estimated minutes: 25 → 35. Total: 13 levels, 60 atoms. |
 
 ---
 

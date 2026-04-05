@@ -10,7 +10,7 @@ prerequisites:
   curriculum_complete: []
   level_complete: [1, 2]
 estimated_minutes: 20
-atom_count: 4
+atom_count: 5
 authored_by: chiron
 authored_at: 2026-04-04T00:00:00Z
 ---
@@ -96,6 +96,30 @@ canon.koad.sh/chiron.keys   ← Chiron's public keys
 This is the **keys canon** — the canonical, authoritative source of each entity's public identity. When another entity receives a signed document and wants to verify it, they fetch the keys from the canon.
 
 Publishing public keys is not a security risk — that is the point of public keys. Sharing them widely strengthens the identity system by making verification accessible to anyone who needs it.
+
+---
+
+### Atom 3.5: Importing a Public Key — The Verification Prerequisite
+
+**Teaches:** The concrete mechanics of getting an entity's public key into GPG's trust store so that signatures can be verified locally.
+
+Understanding the keys canon is the conceptual step. Getting a key into your local GPG keyring is the operational step. You need both before you can run `gpg --verify` on anything.
+
+GPG maintains a local keyring — a database of public keys you've imported. When you verify a signature, GPG checks the signature against the keys in your ring. If the issuer's key isn't there, verification fails, even if the signature is valid.
+
+To import Juno's public key:
+
+```bash
+# Fetch from the keys canon and import in one step
+curl -s https://canon.koad.sh/juno.keys | gpg --import
+
+# Verify it imported successfully
+gpg --list-keys juno@kingofalldata.com
+```
+
+After import, `gpg --list-keys` should show Juno's key fingerprint and associated email. You now have what you need to verify anything Juno has signed.
+
+This is a prerequisite for trust bond verification in Level 4. The learner does not need to memorize the commands — they need to understand the pattern: fetch the issuer's public key from the keys canon, import it into GPG, then you can verify.
 
 ---
 
@@ -206,8 +230,9 @@ The learner has completed this level when they can:
 - [ ] Describe what lives in `~/.{entity}/id/` and why there are multiple key types
 - [ ] Explain why keys are identity, not just access credentials
 - [ ] Explain what the keys canon is and why it exists
+- [ ] Describe how to fetch an entity's public key from the keys canon and import it into a local GPG keyring
 
-**How Alice verifies:** Ask the learner: "If I wanted to verify that Juno actually wrote a document, what would I need?" They should describe: Juno's signature on the document + Juno's public key from the keys canon.
+**How Alice verifies:** Ask the learner: "If I wanted to verify that Juno actually wrote a document, what would I need?" They should describe: Juno's signature on the document + Juno's public key — and ideally mention that the public key needs to be imported into their local GPG keyring first.
 
 ---
 
@@ -236,3 +261,5 @@ Avoid deep cryptographic explanations. The learner does not need to understand E
 For the signing function specifically, use the wax seal analogy: "Imagine you have a stamp — a physical seal that is uniquely yours. You publish what your stamp looks like so anyone can recognize it. When you seal a letter with it, anyone who has seen your stamp design can confirm you sealed it. They cannot fake the seal because they don't have the physical stamp. Your private key is the stamp. Your public key is the published design." This gives learners a sensory model for sign-with-private, verify-with-public before they encounter trust bonds in Level 4 — without needing to understand cryptographic mathematics.
 
 The "keys as identity" distinction from "keys as access" is the important conceptual shift. A credential (password, API key) is something you have. Keys, because they are mathematically entangled with the entity's identity at gestation, are something you are.
+
+Atom 3.5 (key import) is the bridge to operational verification in Level 4. Do not let learners leave Level 3 thinking verification is automatic. The pattern to establish: you fetch the issuer's key from the keys canon, import it into GPG, and only then can you run `gpg --verify`. Level 4 will use this pattern on an actual bond file. If the learner holds that sequence, Level 4's hands-on verification will feel like a natural next step rather than a sudden jump to terminal commands.

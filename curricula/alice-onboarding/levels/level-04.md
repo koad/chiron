@@ -9,8 +9,8 @@ status: locked
 prerequisites:
   curriculum_complete: []
   level_complete: [1, 2, 3]
-estimated_minutes: 25
-atom_count: 5
+estimated_minutes: 35
+atom_count: 7
 authored_by: chiron
 authored_at: 2026-04-04T00:00:00Z
 ---
@@ -127,6 +127,81 @@ This is why the system is trustworthy without a central server: the trust is enc
 
 ---
 
+### Atom 4.6: What a Real Bond File Looks Like
+
+**Teaches:** The concrete format of a trust bond — the clearsign structure that connects the plain-text bond body to the cryptographic signature.
+
+A trust bond file consists of two things fused together: the human-readable authorization statement and a GPG clearsignature block. Here is what the signed file for `juno-to-chiron.md.asc` actually looks like:
+
+```
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+---
+bond: juno-to-chiron
+issuer: juno
+recipient: chiron
+type: authorized-curriculum-architect
+issued: 2026-04-04
+---
+Juno authorizes Chiron to architect curricula on behalf of the koad:io ecosystem.
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYKAB0WIQSx...
+[signature block]
+-----END PGP SIGNATURE-----
+```
+
+The `.asc` extension signals that the file is ASCII-armored — a standard GPG format for embedding binary signature data in printable characters. Everything between `-----BEGIN PGP SIGNED MESSAGE-----` and `-----BEGIN PGP SIGNATURE-----` is the content that was signed. Everything in the signature block is the mathematical proof that the content was signed by the issuer's private key.
+
+The learner does not need to read the signature block. They need to understand: the bond body is human-readable above the signature, and the signature below is what makes it unforgeable. GPG's job is to verify that those two parts match.
+
+---
+
+### Atom 4.7: Operational Verification — Running gpg --verify
+
+**Teaches:** The complete procedural sequence for verifying a trust bond — from finding the file to interpreting the output. This is a hands-on atom: the learner runs commands.
+
+Trust bond verification is a four-step sequence:
+
+**Step 1: Find the bond file.**
+```bash
+ls ~/.juno/trust/bonds/
+# You should see: koad-to-juno.md.asc  juno-to-chiron.md.asc  etc.
+```
+
+**Step 2: Import the issuer's public key** (from Level 3, Atom 3.5).
+```bash
+curl -s https://canon.koad.sh/juno.keys | gpg --import
+```
+
+**Step 3: Run the verification.**
+```bash
+gpg --verify ~/.juno/trust/bonds/koad-to-juno.md.asc
+```
+
+**Step 4: Read the output.**
+
+A successful verification looks like:
+```
+gpg: Signature made Wed Apr  2 14:23:11 2026 UTC
+gpg:                using EDDSA key A3F2...
+gpg: Good signature from "Juno <juno@kingofalldata.com>" [unknown]
+```
+
+"Good signature" means the signature is mathematically valid — the content was signed by whoever holds the private key matching the imported public key, and the content has not been altered since.
+
+A failed verification looks like:
+```
+gpg: BAD signature from "Juno <juno@kingofalldata.com>"
+```
+
+This means either the file was tampered with after signing, or the wrong public key was used. In a real system, this output means: do not trust this bond.
+
+**What the learner has proven when they see "Good signature":** Not that koad is trustworthy. Not that Juno is reliable. The verification proves exactly one thing: the private key that matches the imported public key was used to sign this specific content, and the content has not changed since. The human judgment about whether to trust koad's authority is separate. The math only confirms provenance and integrity.
+
+---
+
 ## Dialogue
 
 ### Opening
@@ -206,6 +281,72 @@ Each link is a signed file. koad authorized Juno. Juno authorized Chiron. Chiron
 
 ---
 
+### Exchange 6
+
+**Alice:** I've been describing what a bond looks like. Let me show you what one actually is, as a file. A signed bond has two parts fused together: the human-readable authorization, and the GPG signature. Here's the format:
+
+```
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+---
+bond: juno-to-chiron
+issuer: juno
+recipient: chiron
+type: authorized-curriculum-architect
+issued: 2026-04-04
+---
+Juno authorizes Chiron to architect curricula on behalf of the koad:io ecosystem.
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYKAB0WIQS...
+-----END PGP SIGNATURE-----
+```
+
+The part you can read is between the headers and the signature block. That's the bond body — the actual authorization in plain text. The signature block is the math.
+
+**Human:** The signature block looks like gibberish.
+
+**Alice:** It is, if you're reading it as text. It's a binary proof compressed into printable characters — standard GPG format. You're not meant to read it. You're meant to feed it to `gpg --verify` and let GPG tell you what it proves. The human-readable part is for you. The signature block is for the math.
+
+---
+
+### Exchange 7
+
+**Alice:** Here's the part where this stops being conceptual. Open a terminal. We're going to verify a bond together.
+
+Step one: find the bond file.
+```bash
+ls ~/.juno/trust/bonds/
+```
+
+You should see files ending in `.asc` — those are the signed bonds.
+
+Step two: import Juno's public key from the keys canon. You learned this pattern in Level 3.
+```bash
+curl -s https://canon.koad.sh/juno.keys | gpg --import
+```
+
+Step three: verify.
+```bash
+gpg --verify ~/.juno/trust/bonds/koad-to-juno.md.asc
+```
+
+**Human:** What does it say?
+
+**Alice:** If everything is right, you'll see something like:
+```
+gpg: Good signature from "Juno <juno@kingofalldata.com>"
+```
+
+That output is the math speaking. It means: the private key that matches the public key you imported was used to sign this content, and the content has not changed since. That's a precise claim. Not "Juno is trustworthy." Not "this bond is valid policy." Just: this content was signed by whoever holds that private key, and it's intact.
+
+**Human:** What if it says BAD signature?
+
+**Alice:** Then one of two things happened: the file was modified after it was signed — even one changed character invalidates the signature — or you imported the wrong public key. Both are meaningful failures. In a real system, a bad signature on a bond means: do not act on this bond. Something is wrong.
+
+---
+
 ### Landing
 
 **Alice:** Trust bonds are how entities make relationships verifiable without a central authority deciding who can do what. Identity says "this is who I am." A trust bond says "this is what I'm allowed to do — and here is the signed proof, traceable to its source." Together, they make a system where authorization is readable, auditable, and can't be silently revoked by an administrator you've never met.
@@ -243,14 +384,16 @@ The learner has completed this level when they can:
 - [ ] Explain why bonds are files rather than database records
 - [ ] Give an example of an inbound bond and an outbound bond for a specific entity
 - [ ] Describe what the trust chain is and how it connects to root authority
+- [ ] Recognize the clearsign format of a bond file (the `-----BEGIN PGP SIGNED MESSAGE-----` structure)
+- [ ] Complete the four-step verification sequence and correctly interpret the output of `gpg --verify`
 
-**How Alice verifies:** Ask: "Chiron wants to write curricula on behalf of Juno. How does Chiron prove it's authorized?" The learner should describe the juno-to-chiron bond, Juno's signature, and potentially the chain up to koad.
+**How Alice verifies:** Ask: "Chiron wants to write curricula on behalf of Juno. How does Chiron prove it's authorized?" The learner should describe the juno-to-chiron bond, Juno's signature, and potentially the chain up to koad. Then ask: "How would you verify that bond yourself, right now?" The learner should describe: find the `.asc` file, import Juno's public key from the canon, run `gpg --verify`, and know that "Good signature" confirms provenance and integrity.
 
 ---
 
 ## Assessment
 
-**Question:** "Alice receives a curriculum from Chiron. How does Alice know she's allowed to use it?"
+**Question 1:** "Alice receives a curriculum from Chiron. How does Alice know she's allowed to use it?"
 
 **Acceptable answers:**
 - "Chiron issued a bond to Alice — `chiron-to-alice.md` — authorizing Alice to deliver the curriculum."
@@ -260,7 +403,17 @@ The learner has completed this level when they can:
 - "Alice just trusts Chiron because they're both in the same system" — misses the signed authorization
 - "There's a server that manages permissions" — learner has not grasped the file-based model
 
-**Estimated conversation length:** 14–18 exchanges
+**Question 2 (operational):** "You see `gpg: Good signature from "Juno <juno@kingofalldata.com>"`. What has been proven?"
+
+**Acceptable answers:**
+- "That the bond was signed by whoever holds Juno's private key, and it hasn't been changed since."
+- "That the content is intact and was signed by the key matching Juno's public key."
+
+**Red flag answers (indicates operational atom should be revisited):**
+- "That Juno is authorized" — conflates provenance with policy judgment
+- "That the bond is trustworthy" — too broad; verification is a mathematical claim about provenance and integrity, not a trust judgment
+
+**Estimated conversation length:** 18–24 exchanges
 
 ---
 
@@ -271,3 +424,5 @@ The trust bond concept builds directly on keys (Level 3). The learner now knows 
 The inbound/outbound distinction can be confusing. A useful reframe: "Who wrote this bond?" If Juno wrote it to Chiron, it's inbound for Chiron (someone granted Chiron something). If Chiron wrote it to Alice, it's outbound from Chiron (Chiron granted Alice something).
 
 The trust chain atom is the most powerful one in this level. If the learner grasps that authority traces back to koad — through verifiable signed files — they have understood something most systems handle with an opaque server.
+
+However, conceptual fluency is not the completion criterion. The learner must also have run `gpg --verify` on a real bond and read the output (Atoms 4.6 and 4.7). Do not skip the hands-on atoms. Learners who can explain trust bonds but have never verified one will hit a comprehension gap when they encounter bonds in production. The terminal output is the confirmation event — "Good signature from Juno" lands differently than any explanation.
