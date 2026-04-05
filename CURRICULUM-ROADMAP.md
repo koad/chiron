@@ -25,11 +25,11 @@ This document maps what the koad:io curriculum covers, how it chains, what paths
 | `daemon-operations` | Daemon Operations — The Kingdom Hub in Practice | in-progress | 7 | 35 | 3.5 h | 1.0.0 |
 | `entity-gestation` | Entity Gestation — Creating Sovereign AI Entities from Scratch | in-progress | 8 | 44+ | 4.0 h | 1.0.0 |
 | `commands-and-hooks` | Commands and Hooks — Teaching an Entity to Act | in-progress | 8 | 40 | 3.5 h | 1.0.0 |
-| `multi-entity-orchestration` | Multi-Entity Orchestration — Running the Team | scaffold | 7 | 35 | 3.0 h | 0.1.0 |
+| `multi-entity-orchestration` | Multi-Entity Orchestration — Running the Team | in-progress | 7 | 35 | 3.0 h | 1.0.0 |
 
 **Totals:** 7 curricula · 61 levels · 300+ atoms · ~26.6 estimated hours of delivery
 
-**Authoring status:** All 6 original curricula are fully authored at the atom level. `entity-operations`, `advanced-trust-bonds`, `daemon-operations`, `entity-gestation`, and `commands-and-hooks` are marked `in-progress` pending Alice delivery; `alice-onboarding` is `active` (delivered, feedback loop open). `commands-and-hooks` reached v1.0.0 on 2026-04-05 — Levels 0–3 authored in commit `35dacaa`, Levels 4–7 authored in commit `5521c38`. `multi-entity-orchestration` scaffolded 2026-04-05 (v0.1.0) — 7 levels, atoms are stubs pending full authoring.
+**Authoring status:** All 7 curricula are fully authored at the atom level. `entity-operations`, `advanced-trust-bonds`, `daemon-operations`, `entity-gestation`, `commands-and-hooks`, and `multi-entity-orchestration` are marked `in-progress` pending Alice delivery; `alice-onboarding` is `active` (delivered, feedback loop open). `commands-and-hooks` reached v1.0.0 on 2026-04-05 — Levels 0–3 authored in commit `35dacaa`, Levels 4–7 authored in commit `5521c38`. `multi-entity-orchestration` reached v1.0.0 on 2026-04-05 — Levels 0–3 authored in commit `008251a`, Levels 4–6 authored in commit `31815a1`. Builder Path and Orchestrator Path step 1 are both delivery-ready.
 
 ---
 
@@ -132,7 +132,7 @@ The chain is linear through the core four. `multi-entity-orchestration` is now s
 **Total:** ~23.1 h across Builder Path + Orchestrator step  
 **Exit point:** The Orchestrator can coordinate any subset of the koad:io team, delegate tasks correctly, verify results without output parsing, and make informed decisions about what happens next without pre-scripting chains.
 
-**Notes:** Orchestrator Path is scaffolded (v0.1.0, 2026-04-05). `multi-entity-orchestration` 7 levels built as stubs — full atom authoring pending. This is the first curriculum in a new track; `content-pipeline-operations` is the anticipated next step when the full team (Veritas, Muse, Mercury, Sibyl) is gestated and operational.
+**Notes:** Orchestrator Path is delivery-ready (v1.0.0, 2026-04-05). `multi-entity-orchestration` 7 levels fully authored — Builder Path prerequisite required, Alice integration pending. This is the first curriculum in a new track; `content-pipeline-operations` is the anticipated next step when the full team (Veritas, Muse, Mercury, Sibyl) is gestated and operational.
 
 ---
 
@@ -209,8 +209,8 @@ Based on gap analysis weighted by: (a) how many operators are blocked without it
 
 ---
 
-### Candidate 3: `multi-entity-orchestration` — SCAFFOLDED v0.1.0 — 2026-04-05
-**Status:** Scaffolded (v0.1.0). 7 levels, 35 atoms estimated. Atom stubs in place; full authoring pending.  
+### Candidate 3: `multi-entity-orchestration` — v1.0.0 — 2026-04-05
+**Status:** Fully authored (v1.0.0). 7 levels, 35 atoms. All atom content authored; delivery-ready pending Alice integration.  
 **Working title:** Multi-Entity Orchestration — Running the Team  
 **Scope:** Covers the Agent tool as the standard entity invocation mechanism, background execution (`run_in_background: true`), parallel vs. sequential delegation with rate pacing (60s between sequential chains), git log as verification primitive, the launch-observe-decide judgment loop, GitHub Issues vs. Agent tool scope boundaries, the Vulcan exception, the judgment test ("judgment or just files?"), and all five orchestration anti-patterns from VESTA-SPEC-054 §9. Establishes the Orchestrator Path as a new learning track following the Builder Path.
 
