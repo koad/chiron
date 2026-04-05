@@ -23,10 +23,11 @@ This document maps what the koad:io curriculum covers, how it chains, what paths
 | `entity-operations` | Entity Operations — Running a Sovereign AI Agent | in-progress | 8 | 38 | 3.5 h | 0.3.0 |
 | `advanced-trust-bonds` | Advanced Trust Bonds — Cryptographic Authorization in Practice | in-progress | 10 | 48 | 4.6 h | 0.3.0 |
 | `daemon-operations` | Daemon Operations — The Kingdom Hub in Practice | in-progress | 7 | 35 | 3.5 h | 1.0.0 |
+| `entity-gestation` | Entity Gestation — Creating Sovereign AI Entities from Scratch | in-progress | 8 | 44+ | 4.0 h | 1.0.0 |
 
-**Totals:** 4 curricula · 38 levels · 181 atoms · ~16.1 estimated hours of delivery
+**Totals:** 5 curricula · 46 levels · 225+ atoms · ~20.1 estimated hours of delivery
 
-**Authoring status:** All four curricula are fully authored at the atom level. `entity-operations`, `advanced-trust-bonds`, and `daemon-operations` are marked `in-progress` pending Alice delivery; `alice-onboarding` is `active` (delivered, feedback loop open). No curriculum is in `placeholder` state.
+**Authoring status:** All five curricula are fully authored at the atom level. `entity-operations`, `advanced-trust-bonds`, `daemon-operations`, and `entity-gestation` are marked `in-progress` pending Alice delivery; `alice-onboarding` is `active` (delivered, feedback loop open). No curriculum is in `placeholder` state.
 
 ---
 
@@ -107,14 +108,14 @@ The chain is linear through the core four. There are no parallel tracks at prese
 1. `alice-onboarding` (4.5 h) — ecosystem foundation
 2. `entity-operations` (3.5 h) — operational fluency (required substrate)
 3. `advanced-trust-bonds` (4.6 h) — authorization design (critical for entity scope)
-4. *(future)* `entity-gestation` — creating entities: the 12-stage gestation protocol, template substitution, naming, key generation, .env design, passenger.json authoring (see Section 5, Candidate 1)
+4. `entity-gestation` (4.0 h) — creating entities: the gestation protocol, template substitution, naming, key generation, .env design, trust bond creation, hook architecture (v1.0.0 complete 2026-04-05)
 5. *(future)* `commands-and-hooks` — teaching an entity to act: commands system, hook architecture, VESTA-SPEC-006 and VESTA-SPEC-020-HOOKS in practice (see Section 5, Candidate 2)
 
-**Total (current):** ~12.6 h across steps 1–3  
-**Total (with future curricula):** ~20 h estimated  
+**Total (current):** ~16.6 h across steps 1–4  
+**Total (with future curricula):** ~24 h estimated  
 **Exit point:** The Builder can gestate a new entity, design its authorization scope, author its commands and hooks, register it with the daemon, and ship it as a deployable product.
 
-**Notes:** The Builder Path is currently incomplete — steps 4 and 5 above do not exist yet. An operator following this path today would hit the wall after `advanced-trust-bonds` and need to work directly from the VESTA specs. Building `entity-gestation` and `commands-and-hooks` is the critical path for unblocking the Builder audience. See Section 5.
+**Notes:** The Builder Path now has 4 of 5 steps. Steps 1–4 are delivery-ready. An operator following this path today would hit the wall after `entity-gestation` — they can gestate an entity but cannot yet teach it new commands and hooks via structured curriculum. `commands-and-hooks` is the next critical gap.
 
 ---
 
