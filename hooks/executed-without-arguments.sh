@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
-# chiron — headquartered at fourty4.
+# chiron — runs locally on thinker.
 
-ENTITY_HOST="fourty4"
-ENTITY_DIR="\$HOME/.chiron"
-CLAUDE_BIN="\$HOME/.nvm/versions/node/v24.14.0/bin/claude"
-NVM_INIT="export PATH=/opt/homebrew/bin:\$HOME/.nvm/versions/node/v24.14.0/bin:\$PATH"
+ENTITY_DIR="$HOME/.chiron"
+CLAUDE_BIN="claude"
 LOCKFILE="/tmp/entity-chiron.lock"
 
 PROMPT="${PROMPT:-}"
@@ -30,7 +28,8 @@ if [ -n "$PROMPT" ]; then
   echo $$ > "$LOCKFILE"
   trap 'rm -f "$LOCKFILE"' EXIT
   ENCODED=$(printf '%s' "$PROMPT" | base64 -w0 2>/dev/null || printf '%s' "$PROMPT" | base64)
-  ssh "$ENTITY_HOST" "$NVM_INIT && cd $ENTITY_DIR && DECODED=\$(echo '$ENCODED' | base64 -d) && $CLAUDE_BIN --model sonnet --dangerously-skip-permissions --output-format=json -p \"\$DECODED\" 2>/dev/null" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('result',''))"
+  DECODED=$(echo "$ENCODED" | base64 -d)
+  cd "$ENTITY_DIR" && $CLAUDE_BIN --model sonnet --dangerously-skip-permissions --output-format=json -p "$DECODED" 2>/dev/null | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('result',''))"
 else
-  exec ssh -t "$ENTITY_HOST" "$NVM_INIT && cd $ENTITY_DIR && $CLAUDE_BIN --model sonnet --dangerously-skip-permissions -c"
+  exec $CLAUDE_BIN --model sonnet --dangerously-skip-permissions -c
 fi
