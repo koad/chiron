@@ -5,7 +5,7 @@ curriculum_slug: multi-entity-orchestration
 level: 4
 slug: output-verification
 title: "Output Verification — Git Log as Ground Truth"
-status: scaffold
+status: authored
 prerequisites:
   curriculum_complete:
     - commands-and-hooks
@@ -32,90 +32,135 @@ After completing this level, the operator will be able to:
 
 ## Atom 4.1: Why Git Log, Not Output Parsing
 
-[STUB — Content to be authored]
+Agent output is conversational. When Sibyl finishes a research synthesis, she may say "I have completed the ICM synthesis and committed it to `research/icm.md`." In a different session, she may say "The research is saved — see `research/icm.md` for the full synthesis." Both sentences mean the same thing, and neither is reliably parseable. The structure varies. The phrasing varies. The file path may or may not appear in the output at all.
 
-Core content to cover:
-- From VESTA-SPEC-054 §3.1: "Agent output is conversational. An entity may explain what it did, describe what it found, or produce intermediate text that does not represent the actual committed result. Parsing this output for structured data is fragile and unnecessary."
-- The entity's commits are the ground truth. The commit exists or it does not. The file is at the specified path or it is not. git log tells the orchestrator which of these is true with certainty.
-- Why output parsing is fragile: agent output varies in structure between sessions. The entity may say "I committed the research" in one session and "The synthesis is at research/icm.md" in another. Both mean the same thing; neither is reliably parseable. git log never varies — it shows commits.
-- The practical implication: every verification step in the judgment loop uses git log first. Text output is read only if the decision about what to do next depends on what the entity found — not to verify that it found anything at all.
-- From VESTA-SPEC-054 §3.1: "The entity's commits are the ground truth. If the entity committed work, git log shows it. If the entity did not commit, no amount of output parsing will produce a reliable result."
+This variability is not a flaw in the entity — it is the nature of conversational output from a language model. VESTA-SPEC-054 §3.1 makes the principle explicit: "Agent output is conversational. An entity may explain what it did, describe what it found, or produce intermediate text that does not represent the actual committed result. Parsing this output for structured data is fragile and unnecessary."
+
+The alternative is the entity's commits. A commit either exists in git history or it does not. The file is at the specified path or it is not. No interpretation is required. `git -C /home/koad/.sibyl/ log --oneline -5` returns a list of commit messages. The expected message prefix is either in that list or absent. This is certainty, not inference.
+
+The practical rule that follows from this: every verification step in the judgment loop uses git log as the first check. Text output is supplementary — you read it only when the next decision depends on what the entity found, not to confirm that the entity found anything at all. Verification and decision-input are different operations. Git log handles verification. Output reading, when it happens, handles decision-input.
+
+An entity that commits a file has created a permanent, verifiable record. An entity that describes what it did has created text. Treat them as what they are.
+
+> **Verification step:** Pull the current state of any entity directory and run `git -C /home/koad/.<entity>/ log --oneline -5`. Note the format — one line per commit, hash prefix, message. This is what you will read after every background task notification.
 
 ---
 
 ## Atom 4.2: The Standard Verification Command
 
-[STUB — Content to be authored]
+The standard verification command from VESTA-SPEC-054 §3.2:
 
-Core content to cover:
-- Standard form from VESTA-SPEC-054 §3.2:
-  ```bash
-  git -C /home/koad/.<entity>/ log --oneline -5
-  ```
-- What each part does: `-C` sets the working directory without `cd`; `log --oneline` shows one line per commit (hash + message); `-5` limits to five most recent commits.
-- What to look for: the expected commit message prefix from the completion signal. If the entity was briefed to commit with "research: ICM pattern synthesis", that string should appear in the five most recent commits.
-- Why `-5` is sufficient: if the expected work is not in the five most recent commits, it either was not done or was committed more than five commits ago (which means something went wrong — the entity did a lot of other work before completing the assigned task).
-- Checking multiple entities:
-  ```bash
-  git -C /home/koad/.sibyl/ log --oneline -5
-  git -C /home/koad/.faber/ log --oneline -5
-  git -C /home/koad/.mercury/ log --oneline -5
-  ```
-- This pattern is repeatable and fast. Three commands, three log snapshots, thirty seconds. The orchestrator knows the state of all three entities.
+```bash
+git -C /home/koad/.<entity>/ log --oneline -5
+```
+
+Each part has a specific purpose. `-C /home/koad/.<entity>/` sets the working directory for the git command without requiring a `cd` — this means you can check multiple entity directories in rapid succession from a single shell context. `log --oneline` prints one line per commit: the short hash followed by the commit message. `-5` limits output to the five most recent commits.
+
+What to look for: the expected commit message prefix from the completion signal in your invocation brief. If Sibyl was briefed to "commit your synthesis to `research/icm.md` with the message prefix `research:`", you are scanning for a line that begins with a hash and contains `research:`. That line's presence confirms the work was done.
+
+Why five commits is sufficient: the work assigned in a single invocation brief should produce a small number of commits — typically one. If the expected commit is not in the most recent five, either the work was not done, or the entity committed many other things before completing the assigned task (which itself warrants investigation). Five is not arbitrary; it is a window sized for single-session assignments.
+
+Checking three entities in parallel after background tasks complete:
+
+```bash
+git -C /home/koad/.sibyl/ log --oneline -5
+git -C /home/koad/.faber/ log --oneline -5
+git -C /home/koad/.mercury/ log --oneline -5
+```
+
+Three commands, three log snapshots, under a minute. The orchestrator now knows the committed state of all three entities and can make the next decision from confirmed ground truth.
+
+> **Verification step:** After running three entity invocations in parallel (from Level 3), use this exact pattern to check all three directories. Confirm that each shows the commit message prefix you specified in the corresponding brief's completion signal.
 
 ---
 
 ## Atom 4.3: Reading Output Efficiently — When Text Matters
 
-[STUB — Content to be authored]
+Git log answers "was the work done?" Text output answers "what did the entity find?" These are different questions, and only the second one sometimes requires reading output at all.
 
-Core content to cover:
-- Sometimes the next decision depends not just on whether the work was done (git log confirms this) but on what the entity found. In these cases, read the output — but read it efficiently.
-- Two patterns from VESTA-SPEC-054 §3.3:
-  1. `tail -20 <output-file>` — reads the last 20 lines of the output file. For most entity responses, the conclusion and summary are at the end.
-  2. `--output-format=json` and reading `.result` from the JSON — produces structured output that can be read programmatically.
-- Why not `cat` the full output: output files can be large. `cat` on a full agent session output file can consume significant context. The orchestrator needs the conclusion, not the full transcript.
-- When to read output vs. when git log is enough:
-  - Work verification: git log is enough. If the commit is present, the work is done.
-  - Decision input: read the output if the next launch depends on the content of the entity's findings (e.g., Sibyl researched — now Juno needs to decide whether the findings warrant a Faber draft or a Veritas review).
-- Git log check is always first. Output reading is supplementary and conditional on the next decision.
+The scenario where output reading matters: Sibyl researched the ICM pattern. Git log confirms the research synthesis was committed. But Juno's next decision — whether to send the synthesis to Faber for a content draft, or to Veritas for a quality review first — depends on the content of the synthesis. Now the output text is decision-relevant. Read it.
+
+Read it efficiently. Two patterns from VESTA-SPEC-054 §3.3:
+
+**Pattern 1: `tail -20`**
+For most entity responses, the conclusion, summary, and key findings appear at the end of the output. The first two-thirds is scaffolding, reasoning, and intermediate steps. Reading the last 20 lines captures the conclusion without consuming the full transcript.
+
+**Pattern 2: `--output-format=json .result`**
+When invoking the Agent tool with `--output-format=json`, the final result is isolated in the `.result` field of the JSON output. This is the cleanest extraction method when the entity was briefed to produce a specific result rather than a conversational response.
+
+Why not `cat` the full output: agent session output files can be large — hundreds of lines of tool calls, intermediate reasoning, and scaffolding. Passing the full output through the orchestrator's context window when only the conclusion matters wastes context capacity. The orchestrator handles multiple entities; context is finite.
+
+The ordering is always: git log first, output reading second and only if the next decision requires content. An operator who reads output before checking git log may be processing text from an entity that did not finish the task.
+
+> **Verification step:** After confirming a background task's commit via git log, identify whether the next launch depends on the entity's findings or only on whether the work was done. If it depends on findings, practice reading the last 20 lines of the output rather than the full session.
 
 ---
 
 ## Atom 4.4: What to Do When the Expected Commit Is Missing
 
-[STUB — Content to be authored]
+You run `git -C /home/koad/.sibyl/ log --oneline -5` and the expected commit prefix is not there. This is not a failure mode that ends the session — it is a diagnostic moment. Three possible causes, each with a different response.
 
-Core content to cover:
-- The expected commit is not in `git log --oneline -5`. Three possible reasons:
-  1. **The entity did not finish.** It hit a tool error, a context limit, or a logical dead end. Check the entity's output for error messages or explanation.
-  2. **The completion signal was absent or unclear.** The entity completed its work but did not know what to commit or where. (This is a brief authoring failure — Level 2's lesson.)
-  3. **The entity committed with a different message.** The git log is there but does not match the expected prefix. Expand the log: `git -C /home/koad/.<entity>/ log --oneline -10` to see more recent commits.
-- Diagnostic sequence:
-  1. Expand log to -10 to check if the commit exists with an unexpected message
-  2. Read entity output (`tail -20`) to check for errors or explanations
-  3. If the entity explains a blocker — file a GitHub Issue
-  4. If the entity completed work to a wrong path — read the output, locate the file, evaluate whether to re-invoke or accept the result
-  5. If the entity clearly did not finish — consider re-invoking with a clearer brief
-- The orchestrator's decision (step 4.4's decide moment): what does the missing commit tell me about what should happen next?
+**Cause 1: The entity did not finish.** It hit a tool error, a context limit, or a logical dead end. The output will typically explain what happened — there will be an error message or a statement like "I was unable to access the required data." Check via `tail -20` of the output file.
+
+**Cause 2: The completion signal was absent or unclear in the brief.** The entity completed its work but did not know what to commit or where to commit it. It may have written findings to the session only. This is a brief authoring failure — the completion signal was missing or underspecified (Level 2's lesson). The work may exist in the session but not in git.
+
+**Cause 3: The entity committed with a different message than expected.** The work is done and committed, but the commit message does not match the expected prefix. Expand the log window:
+
+```bash
+git -C /home/koad/.<entity>/ log --oneline -10
+```
+
+Scan the expanded window for the content of the work, not the expected prefix.
+
+**Diagnostic sequence:**
+
+1. Expand log to `-10` — check if the commit exists with an unexpected message
+2. Read entity output with `tail -20` — check for errors or explanation
+3. If the entity explains a blocker → file a GitHub Issue so the blocker is tracked
+4. If the entity completed work to an unexpected path → read the output to locate the file; decide whether to accept it or re-invoke with a corrected brief
+5. If the entity clearly did not finish → re-invoke with a clearer brief and an explicit completion signal
+
+The missing commit is the decide moment. What does its absence tell you about what should happen next? That question drives the diagnostic sequence.
+
+> **Verification step:** Simulate a missing commit by checking an entity directory that has not been recently invoked. Run the standard `-5` check, then expand to `-20`. Practice reading the commit history to determine whether recent work matches an expected pattern.
 
 ---
 
 ## Atom 4.5: Verification as the Observe Step — Connecting to the Loop
 
-[STUB — Content to be authored]
+Verification is the observe step of the launch-observe-decide loop. The orchestrator launches (Levels 1–3), observes (Level 4), then decides (Levels 5–6). Until this level, the loop was described abstractly. This level makes the observe step concrete: it is git log, in sequence, for each entity that was launched.
 
-Core content to cover:
-- Verification is the observe step of the launch-observe-decide loop. The orchestrator launches (Level 1–3), observes (Level 4), then decides (Level 5–6).
-- A complete observe step:
-  1. Receive the background task notification
-  2. Run `git -C /home/koad/.<entity>/ log --oneline -5`
-  3. Confirm the expected commit is present (or diagnose the absence)
-  4. If the decision requires content: read output efficiently via `tail -20`
-  5. Ready to decide
-- The observe step takes approximately 30–60 seconds per entity. For three parallel entities, the orchestrator runs three git log checks in sequence — each takes seconds. This is the minimum viable verification pass.
-- Why verification matters for the decide step: the orchestrator who skips verification and proceeds directly to the decide step is making decisions based on assumed outcomes. The orchestrator who verifies is making decisions based on confirmed state. The difference compounds over a multi-step orchestration session.
-- Closing the loop: the decide step produces the next launch. The observe step feeds the decide step. The launch step starts the work. One iteration of the loop: launch → work happens → notification → git log → decide → launch (next step).
+The complete observe step, written as a procedure:
+
+1. Background task notification arrives
+2. Run `git -C /home/koad/.<entity>/ log --oneline -5`
+3. Confirm the expected commit is present — or begin the diagnostic sequence from Atom 4.4
+4. If the next decision requires knowing what the entity found, read output via `tail -20`
+5. State of each invoked entity is now confirmed — ready to decide
+
+For three entities launched in parallel (Level 3), the observe pass runs three git log checks in sequence. Each check takes seconds. Total observe pass for three entities: under two minutes.
+
+The stakes of skipping verification are asymmetric. An orchestrator who skips the observe step and moves directly to the decide step is making decisions based on assumed outcomes. If Sibyl appears to have finished but did not actually commit — if she completed the work in session but the completion signal was missing — the orchestrator who skips verification sends Faber a brief with a non-existent research file path. Faber's invocation fails or produces an incomplete draft. One skipped git log check cascades into a failed downstream task.
+
+The orchestrator who verifies is making decisions based on confirmed state. The 30 seconds spent on git log is not overhead — it is the foundation for every decision that follows.
+
+One complete iteration of the loop, with verification:
+
+```
+launch Sibyl
+    ↓  (work happens)
+notification arrives
+    ↓
+git -C /home/koad/.sibyl/ log --oneline -5  ← observe step
+    ↓  (commit confirmed)
+decide: launch Faber with Sibyl's synthesis as context
+    ↓
+sleep 60
+    ↓
+launch Faber  ← next loop iteration begins
+```
+
+> **Verification step:** After any entity background task completes, make git log verification the first action before any subsequent invocation. Build the reflex: notification → git log → decide. Do not invert the order.
 
 ---
 

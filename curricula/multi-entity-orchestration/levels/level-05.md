@@ -5,7 +5,7 @@ curriculum_slug: multi-entity-orchestration
 level: 5
 slug: github-issues-vs-agent-tool
 title: "GitHub Issues vs. Agent Tool — Scope Boundaries"
-status: scaffold
+status: authored
 prerequisites:
   curriculum_complete:
     - commands-and-hooks
@@ -32,92 +32,146 @@ After completing this level, the operator will be able to:
 
 ## Atom 5.1: The Agent Tool Is Session-Scoped
 
-[STUB — Content to be authored]
+The Agent tool is designed for work that starts, happens, and completes within a single orchestration session. VESTA-SPEC-054 §7.1 defines session-scoped work by four characteristics:
 
-Core content to cover:
-- From VESTA-SPEC-054 §7.1: the Agent tool is for work that:
-  - Can be completed in a single session
-  - Is assigned by Juno for the current orchestration sequence
-  - Does not need to survive beyond the current session
-  - Does not require external visibility (no audit trail needed beyond git commits)
-- Examples from the spec: "Sibyl, research the ICM pattern and write a synthesis"; "Faber, draft the Day 6 content brief"; "Veritas, review Vulcan's latest commit and flag any issues."
-- What "session-scoped" means: the work starts, happens, and completes within the current orchestration session. The git commits are the persistent record. The GitHub project board does not need a ticket for it.
-- The record that Agent tool delegations leave: only the entity's git commits. An Agent invocation that produces no commits is ephemeral — it happened but left no trace. This is acceptable for session-scoped exploratory work; it is unacceptable for work that needs to be tracked across sessions.
-- When in doubt about scope: see Atom 5.5 (the decision rule).
+- Can be completed in a single session
+- Is assigned by Juno for the current orchestration sequence
+- Does not need to survive beyond the current session
+- Does not require external visibility (no audit trail beyond git commits)
+
+Concrete examples of session-scoped work: "Sibyl, research the ICM pattern and synthesize your findings to `research/icm.md`." "Faber, draft the Day 6 content brief to `drafts/day-06.md`." "Veritas, review Vulcan's latest commit on `koad/kingofalldata-dot-com` and flag any quality issues to `reviews/vulcan-latest.md`."
+
+In all three cases, the work begins and ends within the current session. Juno will receive the background task notification, verify via git log, read the output if needed, and make the next decision — all before the session ends.
+
+The record that Agent tool delegations leave is the entity's git commits. An Agent invocation that produces commits is verifiable and permanent — the file is in the entity's repository, timestamped, attributed to the entity. An Agent invocation that produces no commits is ephemeral: it happened, but there is no trace of what was done. Ephemeral invocations are acceptable for exploratory work (checking something, getting an entity's assessment) and unacceptable for work that needs to be traceable across sessions.
+
+This scope constraint is what defines the boundary. Any work that cannot complete in a single session — or that needs a persistent record beyond git commits — is not session-scoped. That is GitHub Issues territory.
+
+> **Verification step:** Look at the five most recent Agent tool invocations you have made (or review examples from the Juno logs at `/home/koad/.juno/LOGS/`). For each: did the work complete in one session? Did it produce commits? Were those commits the full audit trail needed, or was something more required?
 
 ---
 
 ## Atom 5.2: GitHub Issues Are Persistent Inter-Entity Assignments
 
-[STUB — Content to be authored]
+GitHub Issues exist for work that cannot be fully scoped to a single session or that requires a persistent record visible to multiple parties. VESTA-SPEC-054 §7.2 defines seven categories of work that always use Issues rather than the Agent tool:
 
-Core content to cover:
-- From VESTA-SPEC-054 §7.2: GitHub Issues are for work that:
-  - Spans multiple sessions or multiple days
-  - Requires an audit trail (who assigned what, when, what was the result)
-  - Involves Vulcan (always via Issues, never Agent tool)
-  - Is assigned from koad to Juno (koad files on `koad/juno`)
-  - Is assigned from Juno to a team entity and needs to remain visible on the operations board
-  - Is blocked on koad action and must remain open as a reminder
-  - Is a cross-entity dependency that needs a shared reference point
-- Examples from the spec: "Gestate team entities veritas, mercury, muse, sibyl" (#2 on koad/vulcan); "Restore dotsh SSH" (#56 on koad/juno); "Merge blog PR" (koad/kingofalldata-dot-com#1).
-- The Juno Operations GitHub Project is the canonical view of all active Issues. Anything on the operations board was filed via GitHub Issues. Agent tool delegations do not appear here.
-- Why persistence matters: work that is blocked on koad action must remain visible so koad can see what is waiting for them. An Agent tool delegation to koad would be invisible — koad is not in a Claude session. A GitHub Issue is visible on the operations board, in notifications, and in `gh issue list`.
+1. Work that spans multiple sessions or multiple days
+2. Work requiring an audit trail (who assigned what, when, and what was the result)
+3. Work involving Vulcan (always via Issues — see Atom 5.3)
+4. Assignments from koad to Juno (koad files on `koad/juno`)
+5. Assignments from Juno to team entities that need to remain visible on the operations board
+6. Work blocked on koad action (must stay open as a reminder until koad acts)
+7. Cross-entity dependencies that need a shared reference point
+
+Real examples from the current operations board:
+- `koad/vulcan#2`: "Gestate team entities: veritas, mercury, muse, sibyl, argus, salus, janus, aegis." Multi-session work assigned to Vulcan. Lives as an Issue because it spans weeks, involves Vulcan (exception applies), and Juno needs to track completion across multiple sessions.
+- `koad/juno#56`: "Restore dotsh SSH." Blocked on koad action. Filed as an Issue so it remains visible — koad sees it when reviewing their assignment queue. An Agent tool delegation to koad is not possible; koad is not in a Claude session.
+- `koad/kingofalldata-dot-com#1`: The Alice UI PR. Blocked on koad merge action. Lives as an Issue so Mercury and the content distribution work know it is pending.
+
+The Juno Operations GitHub Project at `https://github.com/users/koad/projects/4` is the canonical view of all active inter-entity assignments. Every item on that board was filed as a GitHub Issue. Agent tool delegations do not appear there — they are session-scoped, verified via git log, and need no board entry.
+
+> **Verification step:** Run `gh issue list --repo koad/juno --state open`. Review the open issues and classify each by which of the seven categories above applies. Then check the Juno Operations board and confirm these issues are reflected there.
 
 ---
 
 ## Atom 5.3: The Vulcan Exception — Full Treatment
 
-[STUB — Content to be authored]
+Vulcan is never invoked via the Agent tool. This is categorical — there is no "simple Vulcan task" that justifies an Agent tool invocation. Work for Vulcan always goes as a GitHub Issue on `koad/vulcan`.
 
-Core content to cover:
-- Vulcan is never invoked via the Agent tool. He builds on wonderland, paired with Astro. Work for Vulcan always goes as a GitHub Issue on `koad/vulcan`.
-- The rationale: Vulcan is the portability exception (VESTA-SPEC-053 §6). The Agent tool invocation pattern assumes the entity is locally accessible — its directory is on the current machine. Vulcan operates on wonderland, not thinker. `/home/koad/.vulcan/` on thinker may not be current; wonderland is where the live work happens.
-- Practical implication: when Juno has work for Vulcan, she files a GitHub Issue on `koad/vulcan` describing the task. Vulcan picks it up in his own session on wonderland. He comments on the issue with results. Juno reads the issue comment.
-- The Vulcan exception is the clearest "always Issues" case in the system, which is why it is the anchor example for understanding the scope boundary.
-- From VESTA-SPEC-054 §1.3: "See VESTA-SPEC-053 §6 for the full Vulcan exception documentation."
-- Forward reference for operators who want to go deeper: VESTA-SPEC-038 (entity host permission table) documents all host constraints, not just Vulcan's. The host permission table is the authoritative source for "which entities can be Agent-tool'd from which machine."
+The rationale is rooted in the portability contract (VESTA-SPEC-053 §6). The Agent tool invocation pattern assumes the target entity is locally accessible — its directory is on the current machine (`thinker`), and a Claude session can be started there. Vulcan violates this assumption. Vulcan builds on wonderland, paired with Astro. He does not operate on thinker. The `/home/koad/.vulcan/` directory on thinker may be present but it is not the live working state — wonderland is where Vulcan's current, authoritative work lives.
+
+An Agent tool invocation against a stale local copy of Vulcan's directory would produce results that are not integrated with Vulcan's current wonderland context. At best, the work would be duplicated. At worst, it would conflict with active wonderland development.
+
+The correct pattern when Juno has work for Vulcan:
+
+1. File a GitHub Issue on `koad/vulcan` describing the task in full
+2. Assign it to Vulcan; add it to the Juno Operations board
+3. Vulcan picks it up in his own session on wonderland
+4. Vulcan comments on the issue with results or a PR reference
+5. Juno reads the issue comment or reviews the PR; closes the issue when satisfied
+
+From VESTA-SPEC-054 §1.3: "See VESTA-SPEC-053 §6 for the full Vulcan exception documentation." For operators who need to understand host constraints for other entities, VESTA-SPEC-038 (entity host permission table) documents every entity's host assignments. The Vulcan exception is the most prominent constraint in that table, but it is not unique in kind — the table is the authoritative source for any Agent tool invocability question.
+
+The Vulcan exception is the clearest "always Issues" case in the system precisely because its rationale is vivid and specific. Understanding it sharpens the general rule: if an entity is not locally accessible and current, it cannot be Agent-tool'd.
+
+> **Verification step:** Run `gh issue list --repo koad/vulcan --state open`. This is the canonical view of work assigned to Vulcan. Confirm that all current Vulcan assignments are expressed as Issues, not as Agent tool invocations.
 
 ---
 
 ## Atom 5.4: The Decision Rule
 
-[STUB — Content to be authored]
+VESTA-SPEC-054 §7.3 states the decision rule directly:
 
-Core content to cover:
-- From VESTA-SPEC-054 §7.3, the decision rule in full:
-  - **If the work will be done in this session and Juno will see the result before moving on** — use the Agent tool.
-  - **If the work spans sessions, requires koad action, involves Vulcan, or needs to remain visible on the operations board** — use a GitHub Issue.
-  - **When in doubt: file the issue.** It creates a record. An Agent invocation that is not backed by an issue is ephemeral.
-- Why "when in doubt, file the issue" is the correct tie-breaker: filing an unnecessary issue creates a small amount of board noise. Using Agent tool for work that should have been an issue creates a silent gap — the work is not tracked, cannot be blocked on koad, and leaves no persistent record of the assignment.
-- The asymmetry of errors: unnecessary issue = minor overhead. Missing issue for tracked work = loss of visibility, audit gap, koad not notified.
-- Applying the rule to the five always-Issues categories from Atom 5.2: if the work fits any of those categories, it is automatically a GitHub Issue regardless of how short or simple the task seems.
+**If the work will be done in this session and Juno will see the result before moving on** — use the Agent tool.
+
+**If the work spans sessions, requires koad action, involves Vulcan, or needs to remain visible on the operations board** — use a GitHub Issue.
+
+**When in doubt: file the issue.** It creates a record. An Agent invocation that is not backed by an issue is ephemeral.
+
+The tie-breaker ("when in doubt, file the issue") exists because the two types of errors are not symmetric. An unnecessary issue creates minor board noise — a ticket that did not need to be there, closed quickly when the work completes. A missing issue for work that should have been tracked creates a silent gap: the work is not tracked, cannot be marked as blocked on koad, leaves no persistent assignment record, and koad receives no notification. The board does not show the work exists.
+
+The asymmetry: unnecessary issue = minor overhead. Missing issue for tracked work = lost visibility, audit gap, koad not notified, potentially duplicate work when the session ends and a new session begins without context.
+
+Applying the rule:
+- If the work fits any of the seven categories from Atom 5.2 — it is automatically a GitHub Issue. No judgment required. The category membership decides it.
+- If the work fits none of those categories and will clearly complete in this session — use the Agent tool.
+- If you are uncertain whether it will complete in this session — err toward filing the issue. If it completes in the session anyway, close the issue immediately with a reference to the git commit.
+
+The decision rule is a branching question, not a ranking. Check the seven always-Issues categories first. If none apply, the Agent tool is the correct mechanism.
+
+> **Verification step:** State the decision for each of the following: (1) "Faber, draft the Day 7 brief to `drafts/day-07.md`." (2) "Mercury, configure platform credentials for the distribution pipeline." (3) "Veritas, review the latest commit on `koad/kingofalldata-dot-com`." Apply the seven categories first, then the session-scope test.
 
 ---
 
 ## Atom 5.5: Five Mixed-Scope Scenarios — Applying the Rule
 
-[STUB — Content to be authored]
+Apply the decision rule to each scenario before reading the answer. Cover each answer before proceeding to the next scenario.
 
-Core content to cover:
-- Walk through five scenarios, each requiring the operator to apply the decision rule. Deliver them as exercises before providing the answers.
+---
 
-  1. "Sibyl, research the content pipeline pattern and write a synthesis to `research/content-pipeline.md`."
-     - Answer: Agent tool. Single-session, no audit trail needed beyond the git commit, no koad action required.
+**Scenario 1:** "Sibyl, research the content pipeline pattern and write a synthesis to `research/content-pipeline.md`."
 
-  2. "Vulcan, build the Stream PWA — a live activity wall across all entities."
-     - Answer: GitHub Issue on `koad/vulcan`. Vulcan exception applies. Multi-session work. Needs to be visible on the operations board.
+_Your classification:_ [apply the rule]
 
-  3. "Mercury, post the Day 7 content to all configured platforms."
-     - Answer: Depends. If Mercury's credentials are configured and the task can complete in one session: Agent tool. If Mercury's credentials are not configured and the task is blocked on koad: GitHub Issue. The completion signal is the distinguishing factor — if the task cannot complete in this session, it needs an Issue to remain visible.
+**Answer: Agent tool.** Single-session work. Sibyl will research, synthesize, and commit — all within the current session. The git commit at `research/content-pipeline.md` is the complete and sufficient record. No koad action required. No operations board visibility required. None of the seven always-Issues categories apply.
 
-  4. "koad needs to merge the Alice PR before Mercury can distribute."
-     - Answer: GitHub Issue assigned to koad (file on `koad/juno` or `koad/kingofalldata-dot-com`). This is blocked on koad action. An Agent tool delegation to koad does not work — koad is not in a Claude session. The issue stays open until koad acts.
+---
 
-  5. "Faber, review your own Day 5 brief and flag any content that should be updated given Sibyl's latest research."
-     - Answer: Agent tool. Single-session, no audit trail needed, no koad action, no external visibility required.
+**Scenario 2:** "Vulcan, build the Stream PWA — a live activity wall across all entities and systems."
 
-- Have the operator classify each scenario independently before revealing the answers. The scenarios are designed so that two are clearly Agent tool, two are clearly GitHub Issues, and one (scenario 3) requires judgment about the current state.
+_Your classification:_ [apply the rule]
+
+**Answer: GitHub Issue on `koad/vulcan`.** The Vulcan exception applies categorically — Vulcan is never Agent-tool'd. Additionally: this is multi-session work (a full PWA build is not a single-session task), needs to be visible on the operations board, and requires Vulcan to work on wonderland. File the issue, add it to the operations board, and track Vulcan's progress via issue comments and PR references. (This is a real issue: `koad/vulcan#3`.)
+
+---
+
+**Scenario 3:** "Mercury, post the Day 7 content to all configured platforms."
+
+_Your classification:_ [apply the rule]
+
+**Answer: Depends on current state — this is the judgment case.** If Mercury's platform credentials are configured and operational, this is Agent tool work: Mercury posts in one session, the posts are the result, no audit trail needed. If Mercury's credentials are not yet configured (the current state as of 2026-04-05 — see `koad/juno#11`), this task cannot complete in the current session and is blocked on koad action. In that case: GitHub Issue, remain visible until koad resolves the credential setup. The distinguishing question: "Can this complete in the current session?" If the answer is uncertain, file the issue.
+
+---
+
+**Scenario 4:** "koad needs to merge the Alice PR on `koad/kingofalldata-dot-com#1` before Mercury can distribute."
+
+_Your classification:_ [apply the rule]
+
+**Answer: GitHub Issue.** This is blocked on koad action. koad is not in a Claude session and cannot receive Agent tool delegations. The issue must remain open and visible on the operations board so koad sees it when reviewing their assignment queue. File on `koad/juno` with a reference to `koad/kingofalldata-dot-com#1`. (This is the real current blocker in the operations board.)
+
+---
+
+**Scenario 5:** "Faber, review your Day 5 brief and flag any content that should be updated given Sibyl's latest ICM research."
+
+_Your classification:_ [apply the rule]
+
+**Answer: Agent tool.** Single-session. Faber reads her own Day 5 brief, reads Sibyl's synthesis, flags updates, and commits a revision note. No audit trail needed beyond the commit. No koad action. No cross-session visibility needed. No entity host constraints apply. Agent tool with a brief that includes the path to Sibyl's synthesis as cross-entity context.
+
+---
+
+Review your classifications. Scenarios 1 and 5 are clearly Agent tool. Scenarios 2 and 4 are clearly GitHub Issues. Scenario 3 is the judgment case — the correct answer depends on current system state, which is exactly why the tie-breaker rule ("when in doubt, file the issue") exists.
+
+> **Verification step:** State your classification and reasoning for all five scenarios from memory, then check against the answers. Focus on scenario 3 — can you state the distinguishing question that makes it a judgment case?
 
 ---
 
