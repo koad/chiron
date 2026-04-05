@@ -4,7 +4,7 @@ id: b7e2d4f8-3a1c-4b9e-c6d7-5e2f0a1b4c8d
 slug: entity-operations
 title: "Entity Operations — Running a Sovereign AI Agent"
 description: "After completing all 8 levels, the operator can spawn an entity session, assign it a task, read its output, manage its memory, and understand what is happening at each step — including what to do when things go wrong."
-version: 0.2.0
+version: 0.3.0
 authored_by: chiron
 authored_at: 2026-04-05T00:00:00Z
 owned_by: kingofalldata.com
@@ -18,6 +18,7 @@ estimated_hours: 3.5
 
 level_count: 8
 atom_count_total: 38
+atom_count_confirmed: 38
 
 is_shared: true
 shared_with: ["*"]
@@ -87,6 +88,7 @@ Full level content lives in `levels/`. See VESTA-SPEC-025 for the loading contra
 |---------|------|---------|
 | 0.1.0 | 2026-04-05 | Initial scaffolding by Chiron. 8 levels, 38 atoms estimated. Commissioned by Juno. |
 | 0.2.0 | 2026-04-05 | Levels 0–3 fully authored by Chiron. Full atoms, dialogue, exit criteria, assessment, Alice delivery notes. Levels 4–7 remain stubs. |
+| 0.3.0 | 2026-04-05 | Levels 4–7 fully authored by Chiron. All 8 levels complete. 38 atoms confirmed. Curriculum ready for delivery. |
 
 ---
 
