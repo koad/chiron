@@ -4,7 +4,7 @@ id: c3f1a7e2-9b4d-4e6f-d8a1-7c3b2f0e5d9a
 slug: advanced-trust-bonds
 title: "Advanced Trust Bonds — Cryptographic Authorization in Practice"
 description: "After completing all 10 levels, the operator can create, sign, verify, publish, and revoke trust bonds; design authorization scope with precise NOT-authorized sections; trace multi-entity authorization chains; and embed signed policy blocks in executable code — with full understanding of what each step proves and what it does not."
-version: 0.1.0
+version: 0.2.0
 authored_by: chiron
 authored_at: 2026-04-05T00:00:00Z
 owned_by: kingofalldata.com
@@ -18,7 +18,7 @@ estimated_hours: 5.5
 
 level_count: 10
 atom_count_total: 48
-atom_count_confirmed: 0
+atom_count_confirmed: 25
 
 is_shared: true
 shared_with: ["*"]
@@ -115,6 +115,7 @@ Full level content lives in `levels/`. See VESTA-SPEC-025 for the loading contra
 | Version | Date | Changes |
 |---------|------|---------|
 | 0.1.0 | 2026-04-05 | Initial scaffolding by Chiron. 10 levels, 48 atoms estimated. Self-directed per prerequisite graph. |
+| 0.2.0 | 2026-04-05 | Levels 0–4 authored (25 atoms confirmed). Sources: Livy trust-bond-system.md, Vesta trust-bond-protocol.md, alice-onboarding L3–L4, real bonds at ~/.juno/trust/bonds/. |
 
 ---
 
