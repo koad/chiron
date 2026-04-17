@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: 0BSD
 
 # Juno Status Command
 # Pull, show recent commits, open issues, and critical path summary

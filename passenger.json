@@ -1,6 +1,13 @@
 {
+  "handle": "chiron",
+  "name": "Chiron",
+  "role": "curriculum-architect",
   "outfit": {
     "h": 171,
     "s": 33
+  },
+  "dispatch": {
+    "color": "green",
+    "model": "sonnet"
   }
 }

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: 0BSD
 
 # Juno Self-Commit Command
 # Juno commits her own repository at ~/.juno/

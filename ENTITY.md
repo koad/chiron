@@ -11,6 +11,13 @@
 - **Email:** chiron@kingofalldata.com
 - **Repository:** github.com/koad/chiron
 
+## Custodianship
+
+- **Creator:** koad (Jason Zvaniga, koad@koad.sh)
+- **Custodian:** koad (Jason Zvaniga, koad@koad.sh)
+- **Custodian type:** sole
+- **Scope authority:** full
+
 ## Role
 
 Curriculum architect for the koad:io ecosystem. Authors the curricula that Alice delivers.

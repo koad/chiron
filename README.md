@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: CC0-1.0 -->
+
 # Chiron
 
 **Curriculum Architect for the koad:io Ecosystem**

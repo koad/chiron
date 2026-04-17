@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: 0BSD
 
 # Juno Invoke Free Command
 # Spawn a team entity non-interactively via OpenCode (free model), then sleep 120s
