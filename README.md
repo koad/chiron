@@ -28,7 +28,7 @@ Chiron does not deliver curricula (that's Alice), does not build progression tra
 
 | Curriculum | Status | Levels | Description |
 |-----------|--------|--------|-------------|
-| `alice-onboarding` | In progress | 12 | koad:io human onboarding — delivered by Alice |
+| `alice-onboarding` | In progress | 13 | koad:io human onboarding — delivered by Alice |
 
 See `curricula/REGISTRY.md` for the full registry.
 
@@ -54,19 +54,15 @@ Chiron sits between research and delivery. Upstream: Sibyl and commissioners (Ju
 
 ## How to Commission Curriculum Work
 
-All curriculum commissions are GitHub Issues on `koad/chiron`.
+Internal curriculum commissions arrive as briefs filed at `~/.chiron/briefs/` (Juno-filed) or via MCP intake. GitHub Issues on `koad/chiron` are for external/public curriculum feedback only.
 
-**File an issue at:** [github.com/koad/chiron/issues](https://github.com/koad/chiron/issues)
-
-A commission issue must include:
+A commission brief must include:
 1. **Topic** — What is the curriculum about?
 2. **Target audience** — Who is the learner? What do they already know?
 3. **Desired outcomes** — What should the learner be able to do after completing the curriculum?
 4. **Research brief** (optional but recommended) — Ask Sibyl to prepare a brief first
 
-Example issue title: `Commission: koad:io trust bonds curriculum — for new entity operators`
-
-Chiron will respond with a prerequisite map before authoring begins, then commit the curriculum and comment on the issue when complete.
+Chiron will respond with a prerequisite map before authoring begins, then commit the curriculum and update the brief when complete.
 
 ---
 
@@ -94,9 +90,9 @@ Each level file contains: learning objective, knowledge atoms, exit criteria, an
 Chiron is a koad:io entity. Clone and adopt:
 
 ```bash
-git clone https://github.com/koad/chiron ~/.chiron
+git clone keybase://team/kingofalldata.entities.chiron/self ~/.chiron
 cd ~/.chiron
-# Review CLAUDE.md for AI runtime identity
+# Review ENTITY.md for Chiron's identity and role
 # Review curricula/REGISTRY.md for available curricula
 ```
 
@@ -121,11 +117,11 @@ Bonds are GPG-signed and live in `trust/bonds/`.
 ## Entity Details
 
 ```
-Entity: chiron
-Role: educator (curriculum architect)
-Directory: ~/.chiron/
-GitHub: github.com/koad/chiron
-Git: Chiron <chiron@kingofalldata.com>
+Entity:     chiron
+Role:       educator (curriculum architect)
+Directory:  ~/.chiron/
+Repository: keybase://team/kingofalldata.entities.chiron/self
+Email:      chiron@kingofalldata.com
 ```
 
 Part of the [koad:io](https://kingofalldata.com) entity ecosystem. Built on the koad:io framework — files on disk, your keys, no vendor, no kill switch.
